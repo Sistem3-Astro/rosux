@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { router } from "expo-router";
 import { View, Text, TextInput,  TouchableOpacity, StyleSheet, Alert,} from "react-native";
 
 export default function Login() {
@@ -11,7 +12,8 @@ export default function Login() {
       return;
     }
 
-    Alert.alert("Éxito", "Login correcto");
+    Alert.alert("Éxito", "Login correcto"); 
+     router.replace("/(tabs)/formu");
   };
 
   return (
