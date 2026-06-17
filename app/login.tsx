@@ -16,13 +16,12 @@ export default function Login() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titulo1}>Bienvenido</Text>
       <Text style={styles.titulo}>ROSUX</Text>
       <Text style={styles.subtitulo}>Iniciar Sesión</Text>
 
       <TextInput
         style={styles.input}
-        placeholder="Usuario"
+        placeholder="Usuario SAFI"
         value={usuario}
         onChangeText={setUsuario}
       />

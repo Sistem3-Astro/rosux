@@ -6,7 +6,7 @@ export default function Splash() {
   useEffect(() => {
     const timer = setTimeout(() => {
       router.replace("/login");
-    }, 3000);
+    }, 5000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -22,7 +22,7 @@ export default function Splash() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#005A9C",
+    backgroundColor: "#0D6337",
     justifyContent: "center",
     alignItems: "center",
   },

@@ -16,7 +16,9 @@ export default function Login() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titulo1}>Bienvenido</Text>
+      <Text style={styles.titulo1} color="#0D6337">
+        Bienvenido
+      </Text>
       <Text style={styles.titulo}>ROSUX</Text>
       <Text style={styles.subtitulo}>Iniciar Sesión</Text>
 
