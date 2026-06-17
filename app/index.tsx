@@ -1,0 +1,39 @@
+import { router } from "expo-router";
+import { useEffect } from "react";
+import { View, Text, StyleSheet } from "react-native";
+
+export default function Splash() {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      router.replace("/login");
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.titulo}>Bienvenido</Text>
+      <Text style={styles.subtitulo}>SACIMEX</Text>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#005A9C",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  titulo: {
+    color: "#FFF",
+    fontSize: 40,
+    fontWeight: "bold",
+  },
+  subtitulo: {
+    color: "#FFF",
+    fontSize: 24,
+    marginTop: 10,
+  },
+});

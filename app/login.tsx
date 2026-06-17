@@ -2,10 +2,10 @@ import { useState } from "react";
 import { View, Text, TextInput,  TouchableOpacity, StyleSheet, Alert,} from "react-native";
 
 export default function Login() {
-  const [usuario, setUsuario] = useState("");
-  const [password, setPassword] = useState("");
+  const [usuario, setUsuario] = useState("saul");
+  const [password, setPassword] = useState("123");
 
-  const iniciarSesion = () => {
+  const iniciarSesion = () => { 
     if (!usuario || !password) {
       Alert.alert("Error", "Ingresa usuario y contraseña");
       return;
