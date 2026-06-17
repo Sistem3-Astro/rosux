@@ -13,7 +13,7 @@ export default function Login() {
     }
 
     Alert.alert("Éxito", "Login correcto"); 
-     router.replace("/(tabs)/formu");
+    router.replace("/(tabs)/formu");
   };
 
   return (

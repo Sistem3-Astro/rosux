@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { View, Text, TextInput,  TouchableOpacity, StyleSheet, Alert,} from "react-native";
 
-export default function Login() {
+export default function formu() {
   const [usuario, setUsuario] = useState("");
   const [password, setPassword] = useState("");
 
@@ -16,11 +16,8 @@ export default function Login() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titulo1} >
-        Bienvenido
-      </Text>
-      <Text style={styles.titulo}>ROSUX</Text>
-      <Text style={styles.subtitulo}>Iniciar Sesión</Text>
+      <Text style={styles.titulo}>FORMULARIO</Text>
+      <Text style={styles.subtitulo}>Registra los datos del usuario</Text>
 
       <TextInput
         style={styles.input}
@@ -41,7 +38,7 @@ export default function Login() {
         style={styles.boton}
         onPress={iniciarSesion}
       >
-        <Text style={styles.textoBoton}>Ingresar</Text>
+        <Text style={styles.textoBoton}>Enviar</Text>
       </TouchableOpacity>
     </View>
   );
