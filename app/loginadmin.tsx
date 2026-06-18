@@ -11,7 +11,7 @@ import {
   View,
 } from "react-native";
 
-export default function LoginAdmin() {
+export default function Login() {
   const [clave, setClave] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -19,29 +19,19 @@ export default function LoginAdmin() {
   const iniciarSesion = async () => {
     try {
       if (!clave.trim() || !password.trim()) {
-        Alert.alert(
-          "Campos requeridos",
-          "Ingresa usuario y contraseña"
-        );
+        Alert.alert("Campos requeridos", "Ingresa usuario y contraseña");
         return;
       }
 
       setLoading(true);
 
-      const admin: any = await db.getFirstAsync(
-        `SELECT *
-         FROM usuarios
-         WHERE clave = ?
-         AND rol = 'administrador'
-         AND activo = 1`,
+      const user: any = await db.getFirstAsync(
+        `SELECT * FROM usuarios WHERE clave = ? AND activo = 1`,
         [clave.trim()]
       );
 
-      if (!admin) {
-        Alert.alert(
-          "Acceso denegado",
-          "Administrador no encontrado o inactivo"
-        );
+      if (!user) {
+        Alert.alert("Error", "Usuario no encontrado o inactivo");
         return;
       }
 
@@ -50,32 +40,22 @@ export default function LoginAdmin() {
         password
       );
 
-      if (hashIngresado !== admin.password_hash) {
-        Alert.alert(
-          "Acceso denegado",
-          "Contraseña incorrecta"
-        );
+      if (hashIngresado !== user.password_hash) {
+        Alert.alert("Error", "Contraseña incorrecta");
         return;
       }
 
-      Alert.alert(
-        "Bienvenido",
-        admin.nombre_completo,
-        [
-          {
-            text: "Continuar",
-            onPress: () =>
-              router.replace("/(tabs)/formu"),
-          },
-        ]
-      );
+      // 🔥 REDIRECCIÓN POR ROL
+      if (user.rol === "administrador") {
+        router.replace("/(tabs)/usuario"); // admin
+      } else {
+        router.replace("/(tabs)/formu"); // usuario normal
+      }
+
+      Alert.alert("Bienvenido", user.nombre_completo);
     } catch (error) {
       console.error(error);
-
-      Alert.alert(
-        "Error",
-        "No fue posible iniciar sesión"
-      );
+      Alert.alert("Error", "No fue posible iniciar sesión");
     } finally {
       setLoading(false);
     }
@@ -85,15 +65,11 @@ export default function LoginAdmin() {
     <View style={styles.container}>
       <Text style={styles.logo}>ROSUX</Text>
 
-      <Text style={styles.titulo}>
-        Panel de Administración
-      </Text>
+      <Text style={styles.titulo}>Inicio de Sesión</Text>
 
       <TextInput
         style={styles.input}
         placeholder="Usuario"
-        autoCapitalize="none"
-        autoCorrect={false}
         value={clave}
         onChangeText={setClave}
       />
@@ -107,10 +83,7 @@ export default function LoginAdmin() {
       />
 
       <TouchableOpacity
-        style={[
-          styles.boton,
-          loading && styles.botonDeshabilitado,
-        ]}
+        style={[styles.boton, loading && styles.disabled]}
         onPress={iniciarSesion}
         disabled={loading}
       >
@@ -126,44 +99,50 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    padding: 25,
-    backgroundColor: "#F5F7FA",
+    padding: 24,
+    backgroundColor: "#F1F5F9",
   },
+
   logo: {
-    fontSize: 34,
-    fontWeight: "bold",
+    fontSize: 40,
+    fontWeight: "800",
     textAlign: "center",
-    color: "#1E3A8A",
     marginBottom: 10,
+    color: "#1E3A8A",
   },
+
   titulo: {
-    fontSize: 20,
+    fontSize: 18,
     textAlign: "center",
+    marginBottom: 25,
     color: "#64748B",
-    marginBottom: 30,
   },
+
   input: {
     height: 52,
     borderWidth: 1,
     borderColor: "#CBD5E1",
     borderRadius: 12,
     paddingHorizontal: 15,
-    marginBottom: 15,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#FFF",
+    marginBottom: 12,
   },
+
   boton: {
     height: 52,
+    backgroundColor: "#2563EB",
     borderRadius: 12,
-    backgroundColor: "#DC2626",
     justifyContent: "center",
     alignItems: "center",
   },
-  botonDeshabilitado: {
-    opacity: 0.7,
+
+  disabled: {
+    opacity: 0.6,
   },
+
   textoBoton: {
-    color: "#FFFFFF",
+    color: "#FFF",
+    fontWeight: "700",
     fontSize: 16,
-    fontWeight: "bold",
   },
 });
