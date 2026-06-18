@@ -1,39 +1,21 @@
-import { router } from "expo-router";
 import { useEffect } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { router } from "expo-router";
+import Splash from "./Splash";
 
-export default function Splash() {
+export default function Index() {
+
   useEffect(() => {
     const timer = setTimeout(() => {
+<<<<<<< HEAD
       router.replace("/loginadmin");
     }, 5000);
+=======
+      router.replace("/login");
+    }, 3000); // 5 segundos
+>>>>>>> 7374f32958edb4b5d0d699057bba3f2bf1e518f8
 
     return () => clearTimeout(timer);
   }, []);
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.titulo}>Bienvenido</Text>
-      <Text style={styles.subtitulo}>SACIMEX</Text>
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#0D6337",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  titulo: {
-    color: "#FFF",
-    fontSize: 40,
-    fontWeight: "bold",
-  },
-  subtitulo: {
-    color: "#FFF",
-    fontSize: 24,
-    marginTop: 10,
-  },
-});
+  return <Splash />;
+} 
