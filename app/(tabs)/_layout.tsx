@@ -5,6 +5,9 @@ import { IconSymbol } from '@/components/ui/icon-symbol';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { FormProvider } from '@/context/FormContext'; 
+import { TouchableOpacity, Alert } from "react-native";
+import { router } from "expo-router";
+import { Text } from "react-native";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -29,6 +32,16 @@ export default function TabLayout() {
       backgroundColor: "#0D6337",
     },
     headerTintColor: "#fff",
+     headerRight: () => (
+      <TouchableOpacity
+    style={{ marginRight: 25 }}
+    onPress={() => Alert.alert("Cerrar sesión")}
+  >
+    <Text style={{ color: "#fff", fontSize: 16 }}>
+      Salir
+    </Text>
+  </TouchableOpacity>
+    ),
       tabBarIcon: ({ color }) => (
         <IconSymbol size={28} name="doc.text.fill" color={color} />
       ),
