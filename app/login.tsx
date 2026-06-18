@@ -7,8 +7,12 @@ export default function Login() {
   const [password, setPassword] = useState("123");
 
   const iniciarSesion = () => { 
-    if (!usuario || !password) {
-      Alert.alert("Error", "Ingresa usuario y contraseña");
+    if (!usuario  || !password) {
+      Alert.alert("Error", "Ingresa la clave y contraseña");
+      return;
+    }
+    if (usuario !== "saul" || password !== "123") {
+      Alert.alert("Error", "Datos incorrectos");
       return;
     }
 
