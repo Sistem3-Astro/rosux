@@ -17,7 +17,7 @@ export default function formu() {
   return (
     <View style={styles.container}>
       <Text style={styles.titulo}>FORMULARIO</Text>
-      <Text style={styles.subtitulo}>Registra los datos del usuario</Text>
+      <Text style={styles.subtitulo}>Registra los datos del hoy</Text>
 
       <TextInput
         style={styles.input}
