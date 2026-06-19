@@ -5,7 +5,8 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/use-color-scheme';
-import { initDatabase } from '@/database/usuarios';
+// 1. CAMBIO AQUÍ: Importamos la nueva función desde tu archivo db centralizado
+import { inicializarBaseDeDatos } from '@/database/db';
 
 export const unstable_settings = {
   anchor: 'Inicio',
@@ -17,11 +18,11 @@ export default function RootLayout() {
   useEffect(() => {
     const inicializar = async () => {
       try {
-        await initDatabase();
-        console.log('Base de datos inicializada');
+        await inicializarBaseDeDatos(); 
+        console.log('¡Base de datos de Rosus inicializada con éxito!');
       } catch (error) {
         console.error(
-          'Error inicializando la BD:',
+          'Error inicializando la BD de Rosus:',
           error
         );
       }
@@ -39,8 +40,7 @@ export default function RootLayout() {
       }
     >
       <Stack>
-
-         <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="login" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       </Stack>
