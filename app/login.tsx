@@ -3,11 +3,13 @@ import { router } from "expo-router";
 import * as Crypto from "expo-crypto";
 import { View, Text, TextInput,  TouchableOpacity, StyleSheet, Alert,} from "react-native";
 import { db } from '@/database/usuarios';
+import { useAuth } from "@/context/AuthContext";
 
 export default function Login() {
   const [clave, setClave] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const { setUsuario } = useAuth();
 
   const iniciarSesion = async () => {
         try {
@@ -37,9 +39,11 @@ export default function Login() {
             Alert.alert("Error", "Contraseña incorrecta");
             return;
           }
-    
+          console.log("LOGIN user:", user);
+          setUsuario(user);
           // 🔥 REDIRECCIÓN POR ROL
           if (user.rol === "administrador") {
+         
             router.replace("/(tabs)/usuario"); // admin
           } else {
             router.replace("/(tabs)/formu"); // usuario normal

@@ -4,14 +4,10 @@ import bcrypt from "bcryptjs";
 import * as Crypto from "expo-crypto";
 import { useEffect, useState } from "react";
 import {
-  Alert,
-  FlatList,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
+  Alert, FlatList,
+  ScrollView,  StyleSheet,
+  Text, TextInput,
+  TouchableOpacity, View,
 } from "react-native";
 
 export default function UsuariosScreen() {

@@ -3,6 +3,8 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
+import { Slot } from 'expo-router';
+import { AuthProvider } from '@/context/AuthContext';
 
 import { useColorScheme } from '@/hooks/use-color-scheme';
 // 1. CAMBIO AQUÍ: Importamos la nueva función desde tu archivo db centralizado
@@ -32,6 +34,7 @@ export default function RootLayout() {
   }, []);
 
   return (
+     <AuthProvider>
     <ThemeProvider
       value={
         colorScheme === 'dark'
@@ -47,5 +50,6 @@ export default function RootLayout() {
 
       <StatusBar style="auto" />
     </ThemeProvider>
+    </AuthProvider>
   );
 }

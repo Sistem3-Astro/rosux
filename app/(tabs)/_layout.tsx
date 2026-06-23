@@ -6,28 +6,13 @@ import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { FormProvider } from '@/context/FormContext'; 
 import { TouchableOpacity, Alert } from "react-native";
-import { router } from "expo-router";
 import { Text } from "react-native";
-import { AuthProvider } from '@/context/AuthContext';
-import { initDatabase } from '@/database/usuarios';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
  
-useEffect(() => {
-  const startDB = async () => {
-    try {
-      await initDatabase();
-      console.log('DB lista');
-    } catch (error) {
-      console.log('Error DB:', error);
-    }
-  };
 
-  startDB();
-}, []);
   return ( 
-    <AuthProvider>
     <FormProvider>
     <Tabs
       screenOptions={{
@@ -76,12 +61,32 @@ useEffect(() => {
     name="datos/actividad"
     options={{ href: null,
       headerShown: true,
-      title: 'Actividad',
+      title: 'Actividad Economica',
       headerStyle: {
       backgroundColor: "#0D6337",
     },
     }}
       
+  />
+   <Tabs.Screen
+    name="datos/credito"
+    options={{ href: null,
+      headerShown: true,
+      title: 'Credito',
+      headerStyle: {
+      backgroundColor: "#0D6337",
+    },
+    }}
+  />
+   <Tabs.Screen
+    name="datos/ingreso"
+    options={{ href: null,
+      headerShown: true,
+      title: 'Ingresos economicos',
+      headerStyle: {
+      backgroundColor: "#0D6337",
+    },
+    }}
   />
    <Tabs.Screen
     name="explore"
@@ -100,6 +105,6 @@ useEffect(() => {
   />
      </Tabs>
     </FormProvider>
-  </AuthProvider>
   );
-}
+} 
+ 

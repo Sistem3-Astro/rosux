@@ -34,7 +34,7 @@ export default function formu() {
       return;
     }     
 
-    Alert.alert("Éxito", "Siguiente formulario Datos de vivienda");
+    Alert.alert("Éxito", "Formulario Datos de vivienda");
     router.replace('/datos/vivienda'); // redireccion a vivienda
   };
 
@@ -44,13 +44,14 @@ export default function formu() {
 
     if (selectedDate) {
       updateField('fechaNac', selectedDate);
+console.log("Usuario desde formu:", usuario); 
     }
   };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={{ color: '#fff', marginRight: 15 }}>
-      Bienvenido,{usuario?.nombre_completo}
+      <Text style={styles.subtitulo}> 
+      Bienvenido {usuario?.nombre_completo.split(' ')[0]}
       </Text>
       <Text style={styles.titulo}>DATOS GENERALES </Text>
       <Text style={styles.subtitulo}>Ingresa los datos solicitados</Text>

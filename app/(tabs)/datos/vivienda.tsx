@@ -3,6 +3,7 @@ import { View, Text, TextInput,  TouchableOpacity, StyleSheet, Alert, ScrollView
 import { Picker } from '@react-native-picker/picker';
 import Checkbox from 'expo-checkbox';
 import { useFormulario } from "@/context/FormContext"; 
+import { router } from "expo-router";
 
 export default function vivienda() {
   const { formulario, updateField } = useFormulario(); 
@@ -51,7 +52,7 @@ const toggleHaber = (haber: string) => {
 
 
   const Siguiente = () => {
-    if (!formulario.direccionC && !formulario.entreCalle) {
+    if (!formulario.direccionC || !formulario.entreCalle) {
       Alert.alert("Error", "Ingresa los datos requeridos");
       return;
     }  
@@ -88,7 +89,8 @@ const toggleHaber = (haber: string) => {
     return; 
     }
 
-    Alert.alert("Éxito", "Siguiente formulario Datos de vivienda");
+    Alert.alert("Éxito", "Formulario Datos de Actividad Economica");
+    router.replace('/datos/actividad'); // redireccion a actividad
   };
 
 
@@ -133,7 +135,7 @@ const toggleHaber = (haber: string) => {
       </Picker>
       </View>
 
-       <Text style={styles.label}>Tiempo de habitar el domicilio (meses o años)</Text> 
+      <Text style={styles.label}>Tiempo de habitar el domicilio (meses o años)</Text> 
       <TextInput
         style={styles.input}
         placeholder="Meses o años"
