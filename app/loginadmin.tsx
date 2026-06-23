@@ -63,7 +63,7 @@ export default function Login() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.logo}>ROSUX</Text>
+      <Text style={styles.logo}>ROSU</Text>
 
       <Text style={styles.titulo}>Inicio de Sesión</Text>
 

@@ -3,14 +3,12 @@ import { View, Text, TextInput,  TouchableOpacity, StyleSheet, Alert, ScrollView
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import { router } from "expo-router";
-import { useFormulario } from "@/context/FormContext";
-import { useAuth } from '@/context/AuthContext';
+import { useFormulario } from "@/context/FormContext"; 
 
 
-export default function formu() {
+export default function actividad() {
   const [mostrarCalendario, setMostrarCalendario] = useState(false);
-  const { formulario, updateField } = useFormulario();    
-  const { usuario } = useAuth(); 
+  const { formulario, updateField } = useFormulario();     
 
   const Siguiente = () => {
     if (!formulario.nombreC && !formulario.lugarNac && !formulario.escolaridad ) {
@@ -49,21 +47,18 @@ export default function formu() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={{ color: '#fff', marginRight: 15 }}>
-      Bienvenido,{usuario?.nombre_completo}
-      </Text>
-      <Text style={styles.titulo}>DATOS GENERALES </Text>
+      <Text style={styles.titulo}>DATOS DE ACTIVIDAD ECONOMICA </Text>
       <Text style={styles.subtitulo}>Ingresa los datos solicitados</Text>
 
-      <Text style={styles.label}>Nombre del cliente</Text>
+      <Text style={styles.label}>¿A qué se dedica?</Text>
       <TextInput
         style={styles.input}
-        placeholder="Nombre del cliente"
-        value={formulario.nombreC}
+        placeholder="Actividad económica"
+        value={formulario.actividadE}
         onChangeText={(texto) => {
         const soloLetras = texto.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');
         updateField('nombreC', soloLetras);
-      }}
+      }} 
       />
 
       <Text style={styles.label}>Fecha de nacimiento </Text>

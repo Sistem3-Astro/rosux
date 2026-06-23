@@ -1,24 +1,58 @@
 import { useState } from "react";
 import { router } from "expo-router";
+import * as Crypto from "expo-crypto";
 import { View, Text, TextInput,  TouchableOpacity, StyleSheet, Alert,} from "react-native";
+import { db } from '@/database/usuarios';
 
 export default function Login() {
-  const [usuario, setUsuario] = useState("saul");
-  const [password, setPassword] = useState("123");
+  const [clave, setClave] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const iniciarSesion = () => { 
-    if (!usuario  || !password) {
-      Alert.alert("Error", "Ingresa la clave y contraseña");
-      return;
-    }
-    if (usuario !== "saul" || password !== "123") {
-      Alert.alert("Error", "Datos incorrectos");
-      return;
-    }
-
-    Alert.alert("Éxito", "Login correcto"); 
-    router.replace("/(tabs)/formu");
-  };
+  const iniciarSesion = async () => {
+        try {
+          if (!clave.trim() || !password.trim()) {
+            Alert.alert("Campos requeridos", "Ingresa usuario y contraseña");
+            return;
+          }
+    
+          setLoading(true);
+    
+          const user: any = await db.getFirstAsync(
+            `SELECT * FROM usuarios WHERE clave = ? AND activo = 1`,
+            [clave.trim()]
+          );
+    
+          if (!user) {
+            Alert.alert("Error", "Usuario no encontrado o inactivo");
+            return;
+          }
+    
+          const hashIngresado = await Crypto.digestStringAsync(
+            Crypto.CryptoDigestAlgorithm.SHA256,
+            password
+          );
+    
+          if (hashIngresado !== user.password_hash) {
+            Alert.alert("Error", "Contraseña incorrecta");
+            return;
+          }
+    
+          // 🔥 REDIRECCIÓN POR ROL
+          if (user.rol === "administrador") {
+            router.replace("/(tabs)/usuario"); // admin
+          } else {
+            router.replace("/(tabs)/formu"); // usuario normal
+          }
+    
+          Alert.alert("Bienvenido", user.nombre_completo);
+        } catch (error) {
+          console.error(error);
+          Alert.alert("Error", "No fue posible iniciar sesión");
+        } finally {
+          setLoading(false);
+        }
+      };
 
   return (
     <View style={styles.container}>
@@ -28,8 +62,8 @@ export default function Login() {
       <TextInput
         style={styles.input}
         placeholder="Usuario SAFI"
-        value={usuario}
-        onChangeText={setUsuario}
+        value={clave}
+        onChangeText={setClave}
       />
 
       <TextInput
@@ -40,12 +74,15 @@ export default function Login() {
         onChangeText={setPassword}
       />
 
-      <TouchableOpacity
-        style={styles.boton}
-        onPress={iniciarSesion}
-      >
-        <Text style={styles.textoBoton}>Ingresar</Text>
-      </TouchableOpacity>
+     <TouchableOpacity
+             style={[styles.boton, loading && styles.disabled]}
+             onPress={iniciarSesion}
+             disabled={loading}
+           >
+             <Text style={styles.textoBoton}>
+               {loading ? "Validando..." : "Ingresar"}
+             </Text>
+           </TouchableOpacity>
     </View>
   );
 }
@@ -96,4 +133,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
+  disabled: {
+    opacity: 0.6,
+  },
+
 });

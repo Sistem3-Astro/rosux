@@ -16,6 +16,38 @@ export const initDatabase = async () => {
       activo INTEGER NOT NULL DEFAULT 1,
       fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP
     );
+
+    CREATE TABLE IF NOT EXISTS clientes (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      id_usuario INTEGER,
+      nombreC TEXT,
+      fechaNac TEXT,
+      lugarNac TEXT,
+      genero TEXT,
+      telefono TEXT,
+      estadoCivil TEXT,
+      escolaridad TEXT,
+
+      FOREIGN KEY (id_usuario)
+      REFERENCES usuarios(id)
+    );
+
+    CREATE TABLE IF NOT EXISTS vivienda (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      id_cliente INTEGER,
+      direccionC TEXT,
+      entreCalle TEXT,
+      vivienda TEXT,
+      tiempoHab TEXT,
+      tipoViv TEXT,
+      haberesH TEXT,
+      valorV TEXT,
+      servicios TEXT,
+      descripV TEXT
+
+      FOREIGN KEY (id_cliente)
+      REFERENCES clientes(id)
+    );
   `);
 
   const admin = await db.getFirstAsync(
@@ -35,5 +67,7 @@ export const initDatabase = async () => {
       VALUES (?, ?, ?, ?, ?)`,
       ['Administrador', 'admin', hash, 'Corporativo', 'administrador']
     );
+
+   
   }
 };

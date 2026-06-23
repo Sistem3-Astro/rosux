@@ -1,5 +1,5 @@
 import { Tabs } from 'expo-router';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { HapticTab } from '@/components/haptic-tab';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import { Colors } from '@/constants/theme';
@@ -8,12 +8,26 @@ import { FormProvider } from '@/context/FormContext';
 import { TouchableOpacity, Alert } from "react-native";
 import { router } from "expo-router";
 import { Text } from "react-native";
+import { AuthProvider } from '@/context/AuthContext';
+import { initDatabase } from '@/database/usuarios';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
  
+useEffect(() => {
+  const startDB = async () => {
+    try {
+      await initDatabase();
+      console.log('DB lista');
+    } catch (error) {
+      console.log('Error DB:', error);
+    }
+  };
 
-  return (
+  startDB();
+}, []);
+  return ( 
+    <AuthProvider>
     <FormProvider>
     <Tabs
       screenOptions={{
@@ -21,7 +35,7 @@ export default function TabLayout() {
         headerShown: false,
         tabBarButton: HapticTab,
       }}>
-    
+     
     <Tabs.Screen
     name="formu"
     options={{
@@ -47,6 +61,28 @@ export default function TabLayout() {
       ),
     }}
   />
+  <Tabs.Screen
+    name="datos/vivienda"
+    options={{ href: null,
+      headerShown: true,
+      title: 'Vivienda',
+      headerStyle: {
+      backgroundColor: "#0D6337",
+    },
+    }}
+      
+  />
+  <Tabs.Screen
+    name="datos/actividad"
+    options={{ href: null,
+      headerShown: true,
+      title: 'Actividad',
+      headerStyle: {
+      backgroundColor: "#0D6337",
+    },
+    }}
+      
+  />
    <Tabs.Screen
     name="explore"
     options={{
@@ -62,7 +98,8 @@ export default function TabLayout() {
       ),
     }}
   />
-    </Tabs>
+     </Tabs>
     </FormProvider>
+  </AuthProvider>
   );
 }
