@@ -190,24 +190,6 @@ export default function beneficiario() {
         editable={false}
       />
         
-
-      
-
-      
-
-
-         <Text style={styles.label}>¿Tiene créditos activos?Mencionalos</Text>
-                  <TextInput  style={styles.input}
-                   placeholder="Creditos activos"
-                    multiline
-                    numberOfLines={3}
-                    textAlignVertical="top"
-                   value={formulario.creditoAct}
-                   onChangeText={(texto1) => {
-                   const soloLetras = texto1.replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s,$]/g, '');
-                   updateField('creditoAct', soloLetras);
-                   }}
-                   />
                
       <TouchableOpacity
         style={styles.boton}
