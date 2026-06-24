@@ -11,18 +11,18 @@ export default function ingreso() {
   const { usuario } = useAuth(); 
 
   const Siguiente = () => {
-    if (!formulario.salario || formulario.salario <= 0) {
+    if (formulario.salario === '' || formulario.salario === null) {
       Alert.alert("Error", "Ingresa su salario");
       return;
     } 
-    if (!formulario.ventas || formulario.ventas <= 0) {
+    if (formulario.ventas === '' || formulario.ventas === null) {
     Alert.alert('Error', 'Ingresa el monto de ventas');
     return;
    }
 
     console.log("Usuario desde ingresos:", usuario); 
     Alert.alert("Éxito", "Datos de egresos");
-    router.replace('/datos/egreso'); // redireccion a vivienda
+    router.push('/datos/egreso'); // redireccion a vivienda
   };
 
   
@@ -39,7 +39,7 @@ export default function ingreso() {
        <TextInput
         style={styles.input}
         placeholder="$ MXN"
-        value={formulario.salario ? formulario.salario.toString() : ''}
+        value={String(formulario.salario ?? '')}
         maxLength={10}
         keyboardType="numeric"
         onChangeText={(texto) => {
@@ -52,7 +52,7 @@ export default function ingreso() {
         <TextInput
         style={styles.input}
         placeholder="$ MXN"
-        value={formulario.ventas ? formulario.ventas.toString() : ''}
+        value={String(formulario.ventas ?? '')}
         maxLength={10}
         keyboardType="numeric"
         onChangeText={(texto) => {
@@ -65,7 +65,7 @@ export default function ingreso() {
         <TextInput
         style={styles.input}
         placeholder="$ MXN"
-        value={formulario.otrosIngresos ? formulario.otrosIngresos.toString() : ''}
+        value={String(formulario.otrosIngresos ?? '')}
         maxLength={10}
         keyboardType="numeric"
         onChangeText={(texto) => {
@@ -78,7 +78,7 @@ export default function ingreso() {
         <TextInput
         style={styles.input}
         placeholder="$ MXN"
-        value={formulario.ingresoConyuge ? formulario.ingresoConyuge.toString() : ''}
+        value={String(formulario.ingresoConyuge ?? '')}
         maxLength={10}
         keyboardType="numeric"
         onChangeText={(texto) => {

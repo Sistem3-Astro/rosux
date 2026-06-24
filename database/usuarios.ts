@@ -19,7 +19,7 @@ export const initDatabase = async () => {
 
     CREATE TABLE IF NOT EXISTS clientes (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      id_usuario INTEGER,
+      idusuario INTEGER,
       nombreC TEXT,
       fechaNac TEXT,
       lugarNac TEXT,
@@ -27,8 +27,9 @@ export const initDatabase = async () => {
       telefono TEXT,
       estadoCivil TEXT,
       escolaridad TEXT,
+      fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
 
-      FOREIGN KEY (id_usuario)
+      FOREIGN KEY (idusuario)
       REFERENCES usuarios(id)
     );
 
@@ -43,11 +44,102 @@ export const initDatabase = async () => {
       haberesH TEXT,
       valorV TEXT,
       servicios TEXT,
-      descripV TEXT
+      descripV TEXT,
 
       FOREIGN KEY (id_cliente)
       REFERENCES clientes(id)
     );
+
+
+    CREATE TABLE IF NOT EXISTS actividad (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      id_cliente INTEGER,
+      actividadE TEXT,
+      actividadEAd TEXT,
+      antiguedadL TEXT,
+      domicilioNeg TEXT,
+      telefonoNeg TEXT, 
+      nombreConyuge TEXT,
+      lugarNacConyuge TEXT,
+      fechaNacConyuge DATETIME,
+      telefonoConyuge TEXT,
+      ocupacionConyuge TEXT,
+      antiguedadLConyuge TEXT,
+      direccionLConyuge TEXT,
+      nombreHijos TEXT,
+      ref1Nombre TEXT,
+      ref1Direccion TEXT,
+      ref1Telefono TEXT,
+      ref2Nombre TEXT,
+      ref2Direccion TEXT,
+      ref2Telefono TEXT,
+
+      FOREIGN KEY (id_cliente)
+      REFERENCES clientes(id)
+    );
+
+     CREATE TABLE IF NOT EXISTS credito (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      id_cliente INTEGER,
+      producto TEXT,
+      monto REAL DEFAULT 0,
+      plazo TEXT,
+      frecuencia TEXT,
+      motivo TEXT,
+
+      FOREIGN KEY (id_cliente)
+      REFERENCES clientes(id)
+    );
+
+    CREATE TABLE IF NOT EXISTS ingresos (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      id_cliente INTEGER,
+      salario REAL DEFAULT 0,
+      ventas REAL DEFAULT 0,
+      otrosIngresos REAL DEFAULT 0,
+      ingresoConyuge REAL DEFAULT 0,
+
+      FOREIGN KEY (id_cliente)
+      REFERENCES clientes(id)
+    );
+
+    CREATE TABLE IF NOT EXISTS egresos (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      id_cliente INTEGER,
+      renta REAL DEFAULT 0,
+      gServicio REAL DEFAULT 0,
+      gFamiliar REAL DEFAULT 0,
+      gVenta REAL DEFAULT 0,
+      gCirculoc REAL DEFAULT 0,
+      gAdmin REAL DEFAULT 0,
+      gEscolar REAL DEFAULT 0,
+      gAlim REAL DEFAULT 0,
+      gCalzVes REAL DEFAULT 0,
+      gVeh REAL DEFAULT 0,
+      gTransp REAL DEFAULT 0,
+      creditoAct TEXT,
+
+      FOREIGN KEY (id_cliente)
+      REFERENCES clientes(id)
+    );
+
+    CREATE TABLE IF NOT EXISTS beneficiario (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      id_cliente INTEGER,
+      nomBenf TEXT,
+      lugarNacBenf TEXT,
+      fechaNacBenf DATETIME,
+      direccionBenf TEXT,
+      parentesco TEXT,
+      edad INTEGER,
+      ingresos REAL,
+      egresos REAL,
+
+      FOREIGN KEY (id_cliente)
+      REFERENCES clientes(id)
+    );
+
+
   `);
 
   const admin = await db.getFirstAsync(

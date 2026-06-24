@@ -29,23 +29,25 @@ const listaHaberes = [
 ];
 
 const toggleServicio = (servicio: string) => {
+  const serviciosActuales = formulario.servicios ?? [];
   const nuevosServicios =
-    formulario.servicios.includes(servicio)
-      ? formulario.servicios.filter(
+    serviciosActuales.includes(servicio)
+      ? serviciosActuales.filter(
           (s: string) => s !== servicio
         )
-      : [...formulario.servicios, servicio];
+      : [...serviciosActuales, servicio];
 
   updateField('servicios', nuevosServicios);
 }; 
 
 const toggleHaber = (haber: string) => {
+  const haberActual = formulario.haberesH ?? [];
   const nuevosHaberes =
-    formulario.haberesH.includes(haber)
-      ? formulario.haberesH.filter(
+    haberActual.includes(haber)
+      ? haberActual.filter(
           (h: string) => h !== haber
         )
-      : [...formulario.haberesH, haber];
+      : [...haberActual, haber];
 
   updateField('haberesH', nuevosHaberes);
 };
@@ -67,9 +69,7 @@ const toggleHaber = (haber: string) => {
     if (!formulario.tipoViv) {
     Alert.alert('Error', 'Seleccione un tipo de vivienda');
     return; 
-    }
-
-    
+    }    
     if (formulario.haberesH.length === 0) {
      Alert.alert(
         'Error',
@@ -88,9 +88,10 @@ const toggleHaber = (haber: string) => {
     Alert.alert('Error', 'Ingrese el valor o describa la vivienda');
     return; 
     }
+    
 
     Alert.alert("Éxito", "Formulario Datos de Actividad Economica");
-    router.replace('/datos/actividad'); // redireccion a actividad
+    router.push('/datos/actividad'); // redireccion a actividad
   };
 
 
@@ -174,7 +175,7 @@ const toggleHaber = (haber: string) => {
           }}
         >
           <Checkbox
-            value={formulario.haberesH.includes(haber)}
+            value={(formulario.haberesH ?? []).includes(haber)}
             onValueChange={() => toggleHaber(haber)}
           />
           <Text style={{ marginLeft: 8 }}>
@@ -200,7 +201,7 @@ const toggleHaber = (haber: string) => {
           }}
         >
           <Checkbox
-            value={formulario.servicios.includes(servicio)}
+            value={(formulario.servicios ?? []).includes(servicio)}
             onValueChange={() => toggleServicio(servicio)}
           />
           <Text style={{ marginLeft: 8 }}>

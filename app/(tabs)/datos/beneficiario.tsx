@@ -13,8 +13,8 @@ export default function beneficiario() {
   const [mostrarCalendario, setMostrarCalendario] = useState(false);
 
   const Siguiente = () => {
-    if (!formulario.gServicio || formulario.gServicio <= 0) {
-      Alert.alert("Error", "Ingresa el monto de servicios");
+    if (!formulario.nomBenf) {
+      Alert.alert("Error", "Ingresa el nombre del beneficiario");
       return;
     }  
     if (!formulario.gFamiliar || formulario.gFamiliar <= 0) {
@@ -29,10 +29,6 @@ export default function beneficiario() {
     Alert.alert('Error', 'Ingresa el monto de gastos alimenticios');
     return;
    }
-    if (!formulario.gVeh || formulario.gTransp) {
-    Alert.alert('Error', 'Ingresa algun monto de gatos en vehiculo o transporte ');
-    return;
-   } 
 
     console.log("Usuario de benefi:", usuario); 
     Alert.alert("Éxito", "Registro exitoso");
@@ -44,11 +40,10 @@ export default function beneficiario() {
    
        if (selectedDate) {
          updateField('fechaNacBenf', selectedDate);
-        console.log("Usuario desde bene:", usuario); 
        }
      };
 
-        const calcularEdad = (fechaNacimiento: string) => {
+        const calcularEdad = (fechaNacimiento: Date) => {
         const hoy = new Date();
         const nacimiento = new Date(fechaNacimiento);
 
@@ -64,28 +59,27 @@ export default function beneficiario() {
         return edad;
         };
 
-        const edad = formulario.fechaNac
-        ? calcularEdad(formulario.fechaNac)
-        : '';
+       const edad = formulario.fechaNac
+        ? calcularEdad(formulario.fechaNac) : 0;
 
         const totalIngresos =
-        formulario.salario +
-        formulario.ventas +
-        formulario.otrosIngresos +
-        formulario.ingresoConyuge;
+        (Number(formulario.salario) || 0 )+
+        (Number(formulario.ventas ) || 0 )+
+        (Number(formulario.otrosIngresos) || 0) +
+        (Number(formulario.ingresoConyuge)|| 0);
 
          const totalEgresos =
-        formulario.renta +
-        formulario.gServicio +
-        formulario.gFamiliar +
-        formulario.gVenta +
-        formulario.gCirculoc +
-        formulario.gAdmin +
-        formulario.gEscolar +
-        formulario.gAlim +
-        formulario.gCalzVes +
-        formulario.gVeh +
-        formulario.gTransp;
+        (Number(formulario.renta) || 0) +
+        (Number(formulario.gServicio) || 0) +
+        (Number(formulario.gFamiliar) || 0) +
+        (Number(formulario.gVenta) || 0) +
+        (Number(formulario.gCirculoc) || 0) +
+        (Number(formulario.gAdmin) || 0) +
+        (Number(formulario.gEscolar) || 0) +
+        (Number(formulario.gAlim) || 0) +
+        (Number(formulario.gCalzVes) || 0) +
+        (Number(formulario.gVeh) || 0) +
+        (Number(formulario.gTransp) || 0);
 
   
 
@@ -179,14 +173,14 @@ export default function beneficiario() {
       <Text style={styles.label}>Ingresos del cliente</Text> 
        <TextInput
         style={styles.input}
-        value={totalIngresos}
+        value={Number(totalIngresos || 0).toFixed(2)}
         editable={false}
       />
 
       <Text style={styles.label}>Egresos del cliente</Text> 
        <TextInput
         style={styles.input}
-        value={totalEgresos}
+        value={Number(totalEgresos || 0).toFixed(2)}
         editable={false}
       />
         

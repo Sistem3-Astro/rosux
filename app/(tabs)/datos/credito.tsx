@@ -8,7 +8,6 @@ import { useAuth } from '@/context/AuthContext';
 
 
 export default function credito() {
-  const [mostrarCalendario, setMostrarCalendario] = useState(false);
   const { formulario, updateField } = useFormulario();    
   const { usuario } = useAuth(); 
 
@@ -36,7 +35,7 @@ export default function credito() {
 
     console.log("Usuario desde credito:", usuario); 
     Alert.alert("Éxito", "Datos de Ingresos"); 
-    router.replace('/datos/ingreso');
+    router.push('/datos/ingreso');
 
   }; 
 

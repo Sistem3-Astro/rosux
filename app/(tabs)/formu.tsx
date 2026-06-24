@@ -13,7 +13,7 @@ export default function formu() {
   const { usuario } = useAuth(); 
 
   const Siguiente = () => {
-    if (!formulario.nombreC && !formulario.lugarNac && !formulario.escolaridad ) {
+    if (!formulario.nombreC || !formulario.lugarNac) {
       Alert.alert("Error", "Ingresa los datos requeridos");
       return;
     } 
@@ -32,19 +32,22 @@ export default function formu() {
     if (formulario.telefono.length !== 10 ) {
       Alert.alert("Error", "El numero telefonico debe tener 10 dígitos");
       return;
-    }     
+    }  
+    if (!formulario.escolaridad) {
+    Alert.alert('Error', 'Seleccione una escolaridad');
+    return;
+    }   
 
-    Alert.alert("Éxito", "Formulario Datos de vivienda");
-    router.replace('/datos/vivienda'); // redireccion a vivienda
+    Alert.alert("Éxito", "Formulario Datos de vivienda");    
+    console.log("Usuario desde formu:", usuario); 
+    router.push('/datos/vivienda'); // redireccion a vivienda
   };
 
    const onChange = (event: DateTimePickerEvent,
   selectedDate?: Date) => {
     setMostrarCalendario(false);
-
     if (selectedDate) {
       updateField('fechaNac', selectedDate);
-    console.log("Usuario desde formu:", usuario); 
     }
   };
 
@@ -147,7 +150,7 @@ export default function formu() {
         selectedValue={formulario.escolaridad}
         onValueChange={(itemValue: string) => updateField('escolaridad', itemValue)}  
       > 
-        <Picker.Item label="Escolaridad" value="" />
+        <Picker.Item label="Selecciona una escolaridad" value="" />
         <Picker.Item label="Sin escolaridad" value="Sin escolaridad" />
         <Picker.Item label="Primaria"  value="Primaria" />
         <Picker.Item label="Secundaria" value="Secundaria" />

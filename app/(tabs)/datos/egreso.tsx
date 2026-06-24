@@ -11,11 +11,11 @@ export default function egreso() {
   const { usuario } = useAuth(); 
 
   const Siguiente = () => {
-    if (!formulario.gServicio || formulario.gServicio <= 0) {
+    if (!formulario.gServicio ) {
       Alert.alert("Error", "Ingresa el monto de servicios");
       return;
     }  
-    if (!formulario.gFamiliar || formulario.gFamiliar <= 0) {
+    if (!formulario.gFamiliar) {
     Alert.alert('Error', 'Ingresa el monto de gastos familiares');
     return;
    }
@@ -23,19 +23,21 @@ export default function egreso() {
     Alert.alert('Error', 'Ingresa el monto de gastos de venta');
     return;
    }
-    if (!formulario.gAlim || formulario.gAlim <= 0) {
+    if (!formulario.gAlim) {
     Alert.alert('Error', 'Ingresa el monto de gastos alimenticios');
     return;
    }
-    if (!formulario.gVeh || formulario.gTransp) {
-    Alert.alert('Error', 'Ingresa algun monto de gatos en vehiculo o transporte ');
+    if (!formulario.gVeh ) {
+    Alert.alert('Error', 'Ingresa algun monto de gatos en vehiculo ');
     return;
    } 
-
-
+    if (!formulario.gTransp) {
+    Alert.alert('Error', 'Ingresa algun monto de gatos en transporte ');
+    return;
+   } 
     console.log("Usuario desde egreso:", usuario); 
     Alert.alert("Éxito", "Datos de beneficiario");
-    router.replace('/datos/beneficiario'); // redireccion a vivienda
+    router.push('/datos/beneficiario'); // redireccion a vivienda
   };
 
   
@@ -52,7 +54,7 @@ export default function egreso() {
        <TextInput
         style={styles.input}
         placeholder="$ MXN"
-        value={formulario.renta ? formulario.renta.toString() : ''}
+        value={String(formulario.renta ?? '')}
         maxLength={10}
         keyboardType="numeric"
         onChangeText={(texto) => {
@@ -65,7 +67,7 @@ export default function egreso() {
         <TextInput
         style={styles.input}
         placeholder="$ MXN"
-        value={formulario.gServicio ? formulario.gServicio.toString() : ''}
+        value={String(formulario.gServicio ?? '')}
         maxLength={10}
         keyboardType="numeric"
         onChangeText={(texto) => {
@@ -78,7 +80,7 @@ export default function egreso() {
         <TextInput
         style={styles.input}
         placeholder="$ MXN"
-        value={formulario.gFamiliar ? formulario.gFamiliar.toString() : ''}
+        value={String(formulario.gFamiliar ?? '')}
         maxLength={10}
         keyboardType="numeric"
         onChangeText={(texto) => {
@@ -91,7 +93,7 @@ export default function egreso() {
         <TextInput
         style={styles.input}
         placeholder="$ MXN"
-        value={formulario.gVenta ? formulario.gVenta.toString() : ''}
+        value={String(formulario.gVenta ?? '')}
         maxLength={10}
         keyboardType="numeric"
         onChangeText={(texto) => {
@@ -99,12 +101,13 @@ export default function egreso() {
         updateField('gVenta', soloNumeros === '' ? 0 : Number(soloNumeros));
         }}
         />
+   
 
         <Text style={styles.label}>Otros gastos circulo de credito</Text>
         <TextInput
         style={styles.input}
         placeholder="$ MXN"
-        value={formulario.gCirculoc ? formulario.gCirculoc.toString() : ''}
+        value={String(formulario.gCirculoC ?? '')}
         maxLength={10}
         keyboardType="numeric"
         onChangeText={(texto) => {
@@ -117,7 +120,7 @@ export default function egreso() {
         <TextInput
         style={styles.input}
         placeholder="$ MXN"
-        value={formulario.gAdmin ? formulario.gAdmin.toString() : ''}
+        value={String(formulario.gAdmin ?? '')}
         maxLength={10}
         keyboardType="numeric"
         onChangeText={(texto) => {
@@ -129,7 +132,7 @@ export default function egreso() {
         <TextInput
         style={styles.input}
         placeholder="$ MXN"
-        value={formulario.gEscolar ? formulario.gEscolar.toString() : ''}
+        value={String(formulario.gEscolar ?? '')}
         maxLength={10}
         keyboardType="numeric"
         onChangeText={(texto) => {
@@ -142,7 +145,7 @@ export default function egreso() {
         <TextInput
         style={styles.input}
         placeholder="$ MXN"
-        value={formulario.gAlim ? formulario.gAlim.toString() : ''}
+        value={String(formulario.gAlim ?? '')}
         maxLength={10}
         keyboardType="numeric"
         onChangeText={(texto) => {
@@ -155,7 +158,7 @@ export default function egreso() {
         <TextInput
         style={styles.input}
         placeholder="$ MXN"
-        value={formulario.gCalzVes ? formulario.gCalzVes.toString() : ''}
+        value={String(formulario.gCalzVes ?? '')}
         maxLength={10}
         keyboardType="numeric"
         onChangeText={(texto) => {
@@ -168,7 +171,7 @@ export default function egreso() {
         <TextInput
         style={styles.input}
         placeholder="$ MXN"
-        value={formulario.gVeh ? formulario.gVeh.toString() : ''}
+        value={String(formulario.gVeh ?? '')}
         maxLength={10}
         keyboardType="numeric"
         onChangeText={(texto) => {
@@ -181,7 +184,7 @@ export default function egreso() {
         <TextInput
         style={styles.input}
         placeholder="$ MXN"
-        value={formulario.gTransp ? formulario.gTransp.toString() : ''}
+        value={String(formulario.gTransp ?? '')}
         maxLength={10}
         keyboardType="numeric"
         onChangeText={(texto) => {

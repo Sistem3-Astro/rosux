@@ -18,7 +18,7 @@ export const inicializarBaseDeDatos = async () => {
       PRAGMA foreign_keys = ON;
 
       -- 1. TABLA ASESOR
-      CREATE TABLE IF NOT EXISTS "Asesor" (
+      CREATE TABLE IF NOT EXISTS "Usuarios" (
         "id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
         "nombre" TEXT,
         "ClaveSAFI" TEXT,

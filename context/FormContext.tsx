@@ -4,7 +4,7 @@ export const FormContext = createContext<any>(null);
 // 2. Provider (memoria global)
 export const FormProvider = ({ children }: any) => {
   const [formulario, setFormulario] = useState({
-    idAsesor: "",
+    idUsuario: "",
     idCliente:null,  
     nombreC: "",
     fechaNac: null as Date | null,
@@ -81,16 +81,19 @@ export const FormProvider = ({ children }: any) => {
     
   });
 
-  const updateField = (campo: string, valor: any) => {
-    setFormulario(prev => ({
-      ...prev,
-      [campo]: valor,
-    }));
-  };
+ const updateField = <K extends keyof typeof formulario>(
+  campo: K,
+  valor: (typeof formulario)[K]
+) => {
+  setFormulario(prev => ({
+    ...prev,
+    [campo]: valor,
+  }));
+};
 
    const resetFormulario = () => {
     setFormulario({
-      idAsesor: "",
+    idUsuario: "",
     idCliente:null,  
     nombreC: "",
     fechaNac: null as Date | null,
@@ -105,9 +108,9 @@ export const FormProvider = ({ children }: any) => {
     vivienda: '',
     tiempoHab: '',
     tipoViv: '',
-    haberesH: [],
+    haberesH: [] as string[],
     valorV: '',
-    servicios: [],
+    servicios: [] as string[],
     descripV: '',
 
   actividadE:'',

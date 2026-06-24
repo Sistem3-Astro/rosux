@@ -8,7 +8,7 @@ import { AuthProvider } from '@/context/AuthContext';
 
 import { useColorScheme } from '@/hooks/use-color-scheme';
 // 1. CAMBIO AQUÍ: Importamos la nueva función desde tu archivo db centralizado
-import { inicializarBaseDeDatos } from '@/database/db';
+import { initDatabase } from '@/database/usuarios';
 
 export const unstable_settings = {
   anchor: 'Inicio',
@@ -20,7 +20,7 @@ export default function RootLayout() {
   useEffect(() => {
     const inicializar = async () => {
       try {
-        await inicializarBaseDeDatos(); 
+        await initDatabase(); 
         console.log('¡Base de datos de Rosus inicializada con éxito!');
       } catch (error) {
         console.error(
