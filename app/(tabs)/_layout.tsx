@@ -88,6 +88,26 @@ export default function TabLayout() {
     },
     }}
   />
+    <Tabs.Screen
+    name="datos/egreso"
+    options={{ href: null,
+      headerShown: true,
+      title: 'Egresos economicos',
+      headerStyle: {
+      backgroundColor: "#0D6337",
+    },
+    }}
+  />
+  <Tabs.Screen
+    name="datos/beneficiario"
+    options={{ href: null,
+      headerShown: true,
+      title: 'Beneficiario',
+      headerStyle: {
+      backgroundColor: "#0D6337",
+    },
+    }}
+  />
    <Tabs.Screen
     name="explore"
     options={{

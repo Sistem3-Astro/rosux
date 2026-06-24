@@ -44,7 +44,7 @@ export default function formu() {
 
     if (selectedDate) {
       updateField('fechaNac', selectedDate);
-console.log("Usuario desde formu:", usuario); 
+    console.log("Usuario desde formu:", usuario); 
     }
   };
 

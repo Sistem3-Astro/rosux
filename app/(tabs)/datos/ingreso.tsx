@@ -22,7 +22,7 @@ export default function ingreso() {
 
     console.log("Usuario desde ingresos:", usuario); 
     Alert.alert("Éxito", "Datos de egresos");
-    router.replace('/datos/vivienda'); // redireccion a vivienda
+    router.replace('/datos/egreso'); // redireccion a vivienda
   };
 
   
