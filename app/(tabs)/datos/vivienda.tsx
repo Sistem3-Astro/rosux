@@ -127,13 +127,14 @@ const toggleHaber = (haber: string) => {
      <View style={styles.pickerContainer}>
       <Picker
         selectedValue={formulario.vivienda}
-        onValueChange={(itemValue: string) => updateField('vivienda', itemValue)} >
+        onValueChange={(itemValue: string) => updateField('vivienda', itemValue)} 
+        >
         <Picker.Item label="Seleccione una vivienda" value="" />
-        <Picker.Item label="Rentada" value="rentada" />
-        <Picker.Item label="Propia" value="propia" />
-        <Picker.Item label="Prestada" value="prestada" />
-        <Picker.Item label="Familiar" value="familiar" />
-      </Picker>
+        <Picker.Item label="Rentada" value="Rentada" />
+        <Picker.Item label="Propia" value="Propia" />
+        <Picker.Item label="Prestada" value="Prestada" />
+        <Picker.Item label="Familiar" value="Familiar" />
+      </Picker> 
       </View>
 
       <Text style={styles.label}>Tiempo de habitar el domicilio (meses o años)</Text> 
