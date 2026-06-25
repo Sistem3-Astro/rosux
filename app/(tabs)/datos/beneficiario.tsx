@@ -4,63 +4,30 @@ import { Picker } from '@react-native-picker/picker';
 import { router } from "expo-router";
 import { useFormulario } from "@/context/FormContext";
 import { useAuth } from '@/context/AuthContext';
+import {guardarSolicitud} from '@/database/registrar'
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 
 
 export default function beneficiario() { 
-  const { formulario, updateField } = useFormulario();    
+  const { formulario, updateField, resetFormulario } = useFormulario();    
   const { usuario } = useAuth(); 
   const [mostrarCalendario, setMostrarCalendario] = useState(false);
 
-  const Siguiente = () => {
-    if (!formulario.nomBenf) {
-      Alert.alert("Error", "Ingresa el nombre del beneficiario");
-      return;
-    }  
-    if (!formulario.gFamiliar || formulario.gFamiliar <= 0) {
-    Alert.alert('Error', 'Ingresa el monto de gastos familiares');
-    return;
-   }
-   if (!formulario.gVenta) {
-    Alert.alert('Error', 'Ingresa el monto de gastos de venta');
-    return;
-   }
-    if (!formulario.gAlim || formulario.gAlim <= 0) {
-    Alert.alert('Error', 'Ingresa el monto de gastos alimenticios');
-    return;
-   }
+   const calcularEdad = (fechaNacimiento: Date) => {
+    const hoy = new Date();
+    const nacimiento = new Date(fechaNacimiento);
+    let edad = hoy.getFullYear() - nacimiento.getFullYear();
+    const mes = hoy.getMonth() - nacimiento.getMonth();
 
-    console.log("Usuario de benefi:", usuario); 
-    Alert.alert("Éxito", "Registro exitoso");
-    router.replace('/datos/beneficiario'); // redireccion a vivienda
-  };
-    const onChange = (event: DateTimePickerEvent,
-     selectedDate?: Date) => {
-       setMostrarCalendario(false);
-   
-       if (selectedDate) {
-         updateField('fechaNacBenf', selectedDate);
-       }
-     };
-
-        const calcularEdad = (fechaNacimiento: Date) => {
-        const hoy = new Date();
-        const nacimiento = new Date(fechaNacimiento);
-
-        let edad = hoy.getFullYear() - nacimiento.getFullYear();
-
-        const mes = hoy.getMonth() - nacimiento.getMonth();
-
-        if ( mes < 0 ||
-            (mes === 0 && hoy.getDate() < nacimiento.getDate())
-        ) {
-            edad--;
-        }
-        return edad;
-        };
-
-       const edad = formulario.fechaNac
-        ? calcularEdad(formulario.fechaNac) : 0;
+    if ( mes < 0 ||
+       (mes === 0 && hoy.getDate() < nacimiento.getDate())
+      ) {
+      edad--;
+      }
+      return edad;
+      };
+    const edad = formulario.fechaNac
+    ? calcularEdad(formulario.fechaNac) : 0;
 
         const totalIngresos =
         (Number(formulario.salario) || 0 )+
@@ -81,6 +48,65 @@ export default function beneficiario() {
         (Number(formulario.gVeh) || 0) +
         (Number(formulario.gTransp) || 0);
 
+
+  const Siguiente = async () => {
+    if (!formulario.nomBenf) {
+      Alert.alert("Error", "Ingresa el nombre del beneficiario");
+      return;
+    }  
+    if (!formulario.lugarNacBenf) {
+    Alert.alert('Error', 'Selecciona la fecha de nacimiento');
+    return;
+   }
+   if (!formulario.direccionBenf) {
+    Alert.alert('Error', 'Ingresa el domicilio');
+    return;
+   }
+    if (!formulario.parentesco) {
+    Alert.alert('Error', 'Selecciona un parentesco');
+    return;
+   }
+
+    console.log("Usuario de benefi:", usuario); 
+    try {
+      
+      const formularioActualizado = {
+      ...formulario,
+      edad,
+      ingresos: totalIngresos,
+      egresos: totalEgresos,
+    };
+
+    await guardarSolicitud(formularioActualizado, usuario);
+
+    Alert.alert("Éxito", "Registro guardado correctamente",
+      [
+        {
+          text: "Aceptar",
+          onPress: () => {
+            resetFormulario(); // opcional
+            router.replace("/(tabs)/formu");
+          },
+        },
+      ]
+    );
+
+  } catch (error) {
+    console.error("Error al guardar:", error);
+    Alert.alert("Error", "No fue posible guardar el registro"  );
+  }
+
+  };
+    const onChange = (event: DateTimePickerEvent,
+     selectedDate?: Date) => {
+       setMostrarCalendario(false);
+   
+       if (selectedDate) {
+         updateField('fechaNacBenf', selectedDate);
+       }
+     };
+
+       
   
 
   return (

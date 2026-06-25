@@ -9,12 +9,13 @@ import {
   Text, TextInput,
   TouchableOpacity, View,
 } from "react-native";
+import { useAuth } from '@/context/AuthContext';
 
 export default function UsuariosScreen() {
   const [usuarios, setUsuarios] = useState<any[]>([]);
-
+  const [clientes, setClientes] = useState<any[]>([]);
   const [editandoId, setEditandoId] = useState<number | null>(null);
-
+  const { usuario } = useAuth(); 
   const [nombre, setNombre] = useState("");
   const [clave, setClave] = useState("");
   const [password, setPassword] = useState("");
@@ -30,10 +31,30 @@ export default function UsuariosScreen() {
       const data: any[] = await db.getAllAsync(
         `SELECT *
          FROM usuarios
-         ORDER BY nombre_completo`
+         ORDER BY nombre_completo`,
       );
 
       setUsuarios(data);
+
+    const clientes: any[] = await db.getAllAsync(
+      `SELECT
+      c.nombreC,
+      v.tipoViv,
+      b.nomBenf,
+      b.edad,
+      b.ingresos,
+      e.gServicio
+      FROM cliente c
+      LEFT JOIN vivienda v 
+      ON c.id = v.id_cliente
+      LEFT JOIN beneficiario b 
+      ON c.id = b.id_cliente
+      LEFT JOIN egresos e
+      ON c.id = e.id_cliente
+      `);       
+      setClientes(clientes);
+      console.log("CLIENTES:", clientes);
+          
     } catch (error) {
       console.error(error);
     }
@@ -322,6 +343,7 @@ export default function UsuariosScreen() {
         }
         renderItem={renderUsuario}
       />
+      
     </ScrollView>
   );
 }

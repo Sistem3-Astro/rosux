@@ -182,7 +182,7 @@ await db.runAsync(
    parentesco,
    edad,
    ingresos,
-   egresos,
+   egresos
   )VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
   [
     idCliente,

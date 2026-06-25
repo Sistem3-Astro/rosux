@@ -1,112 +1,285 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
-
-import { Collapsible } from '@/components/ui/collapsible';
-import { ExternalLink } from '@/components/external-link';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Fonts } from '@/constants/theme';
+import { db } from "@/database/usuarios";
+import bcrypt from "bcryptjs";
+import * as Crypto from "expo-crypto";
+import { useEffect, useState } from "react";
+import { Alert, FlatList, Text,  View, StyleSheet} from "react-native";
+import { useAuth } from '@/context/AuthContext';
 
 export default function TabTwoScreen() {
+ const [usuarios, setUsuarios] = useState<any[]>([]);
+   const [clientes, setClientes] = useState<any[]>([]);
+  const [editandoId, setEditandoId] = useState<number | null>(null);  
+  const { usuario } = useAuth(); 
+
+  const [nombre, setNombre] = useState("");
+  const [clave, setClave] = useState("");
+  const [password, setPassword] = useState("");
+  const [sucursal, setSucursal] = useState("");
+  const [rol, setRol] = useState("usuario");
+
+  useEffect(() => {
+    cargarUsuarios();
+  }, []);
+
+  const cargarUsuarios = async () => {
+    try {
+      const data: any[] = await db.getAllAsync(
+        `SELECT *
+         FROM usuarios
+         ORDER BY nombre_completo`,
+      );
+
+      setUsuarios(data);
+
+    const clientes: any[] = await db.getAllAsync(
+      `SELECT
+        c.*,
+        v.*,
+        b.nomBenf,
+        b.edad,
+        b.ingresos,
+        e.gServicio
+      FROM cliente c 
+      LEFT JOIN vivienda v 
+      ON c.id = v.id_cliente
+      LEFT JOIN beneficiario b 
+      ON c.id = b.id_cliente
+      LEFT JOIN egresos e
+      ON c.id = e.id_cliente
+      WHERE c.idusuario = ?
+       `,[usuario.id]
+      );       
+
+      setClientes(clientes);
+      console.log("CLIENTES:", clientes);
+          
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const limpiarFormulario = () => {
+    setEditandoId(null);
+    setNombre("");
+    setClave("");
+    setPassword("");
+    setSucursal("");
+    setRol("usuario");
+  };
+
+  const guardarUsuario = async () => {
+    try {
+      if (!nombre || !clave || !sucursal) {
+        Alert.alert(
+          "Error",
+          "Completa los campos obligatorios"
+        );
+        return;
+      }
+
+      if (editandoId) {
+        await db.runAsync(
+          `UPDATE usuarios
+           SET nombre_completo = ?,
+               clave = ?,
+               sucursal = ?,
+               rol = ?
+           WHERE id = ?`,
+          [
+            nombre,
+            clave,
+            sucursal,
+            rol,
+            editandoId,
+          ]
+        );
+
+        if (password.trim()) {
+          const hash = await bcrypt.hash(
+            password,
+            10
+          );
+
+          await db.runAsync(
+            `UPDATE usuarios
+             SET password_hash = ?
+             WHERE id = ?`,
+            [hash, editandoId]
+          );
+        }
+
+        Alert.alert(
+          "Éxito",
+          "Usuario actualizado"
+        );
+      } else {
+        if (!password) {
+          Alert.alert(
+            "Error",
+            "Ingresa una contraseña"
+          );
+          return;
+        }
+
+        const hash = await Crypto.digestStringAsync(
+          Crypto.CryptoDigestAlgorithm.SHA256,
+          password
+        );
+
+        await db.runAsync(
+          `INSERT INTO usuarios
+          (
+            nombre_completo,
+            clave,
+            password_hash,
+            sucursal,
+            rol,
+            activo
+          )
+          VALUES (?, ?, ?, ?, ?, 1)`,
+          [
+            nombre,
+            clave,
+            hash,
+            sucursal,
+            rol,
+          ]
+        );
+
+        Alert.alert(
+          "Éxito",
+          "Usuario creado"
+        );
+      }
+
+      limpiarFormulario();
+      cargarUsuarios();
+    } catch (error: any) {
+      Alert.alert(
+        "Error",
+        error.message
+      );
+    }
+  };
+
+  const editarUsuario = (usuario: any) => {
+    setEditandoId(usuario.id);
+    setNombre(usuario.nombre_completo);
+    setClave(usuario.clave);
+    setSucursal(usuario.sucursal);
+    setRol(usuario.rol);
+    setPassword("");
+  };
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
-      headerImage={
-        <IconSymbol
-          size={310}
-          color="#808080"
-          name="chevron.left.forwardslash.chevron.right"
-          style={styles.headerImage}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText
-          type="title"
-          style={{
-            fontFamily: Fonts.rounded,
-          }}>
-          Explore
-        </ThemedText>
-      </ThemedView>
-      <ThemedText>This app includes example code to help you get started.</ThemedText>
-      <Collapsible title="File-based routing">
-        <ThemedText>
-          This app has two screens:{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/explore.tsx</ThemedText>
-        </ThemedText>
-        <ThemedText>
-          The layout file in <ThemedText type="defaultSemiBold">app/(tabs)/_layout.tsx</ThemedText>{' '}
-          sets up the tab navigator.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/router/introduction">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Android, iOS, and web support">
-        <ThemedText>
-          You can open this project on Android, iOS, and the web. To open the web version, press{' '}
-          <ThemedText type="defaultSemiBold">w</ThemedText> in the terminal running this project.
-        </ThemedText>
-      </Collapsible>
-      <Collapsible title="Images">
-        <ThemedText>
-          For static images, you can use the <ThemedText type="defaultSemiBold">@2x</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">@3x</ThemedText> suffixes to provide files for
-          different screen densities
-        </ThemedText>
-        <Image
-          source={require('@/assets/images/react-logo.png')}
-          style={{ width: 100, height: 100, alignSelf: 'center' }}
-        />
-        <ExternalLink href="https://reactnative.dev/docs/images">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Light and dark mode components">
-        <ThemedText>
-          This template has light and dark mode support. The{' '}
-          <ThemedText type="defaultSemiBold">useColorScheme()</ThemedText> hook lets you inspect
-          what the user&apos;s current color scheme is, and so you can adjust UI colors accordingly.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Animations">
-        <ThemedText>
-          This template includes an example of an animated component. The{' '}
-          <ThemedText type="defaultSemiBold">components/HelloWave.tsx</ThemedText> component uses
-          the powerful{' '}
-          <ThemedText type="defaultSemiBold" style={{ fontFamily: Fonts.mono }}>
-            react-native-reanimated
-          </ThemedText>{' '}
-          library to create a waving hand animation.
-        </ThemedText>
-        {Platform.select({
-          ios: (
-            <ThemedText>
-              The <ThemedText type="defaultSemiBold">components/ParallaxScrollView.tsx</ThemedText>{' '}
-              component provides a parallax effect for the header image.
-            </ThemedText>
-          ),
-        })}
-      </Collapsible>
-    </ParallaxScrollView>
+    <View style={styles.container}>
+      <Text style={styles.titulo}>
+        Registro de tus visitas
+      </Text>
+
+       <FlatList
+        data={clientes}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <View style={styles.card}>
+            <Text style={styles.nombre}>Datos del cliente</Text>
+            <Text>Cliente: {item.nombreC}</Text>
+            <Text>Teléfono: {item.telefono}</Text>
+            <Text>Dirección: {item.direccionC}</Text>
+             <Text style={styles.nombre}>Vivienda</Text>
+            <Text>Vivienda: {item.tipoViv}</Text>
+            <Text>Haberes: {item.haberesH}</Text>
+             <Text style={styles.nombre}>Beneficiario</Text>
+            <Text>Beneficiario: {item.nomBenf}</Text>
+            <Text>Edad cliente: {item.edad}</Text>
+            <Text>Ingresos totales: ${item.ingresos}</Text>
+          </View>
+        )}
+      />
+      
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  headerImage: {
-    color: '#808080',
-    bottom: -90,
-    left: -35,
-    position: 'absolute',
+
+  generar: {
+  backgroundColor: "#16A34A",
+  padding: 12,
+  borderRadius: 10,
+  alignItems: "center",
+  marginBottom: 10,
+},
+
+  container: {
+    flex: 1,
+    padding: 15,
+    backgroundColor: "#F8FAFC",
   },
-  titleContainer: {
-    flexDirection: 'row',
-    gap: 8,
+  titulo: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 15,
+    alignItems: "center",
+    
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "#CBD5E1",
+    borderRadius: 10,
+    padding: 12,
+    backgroundColor: "#FFF",
+    marginBottom: 10,
+  },
+  pickerContainer: {
+    borderWidth: 1,
+    borderColor: "#CBD5E1",
+    borderRadius: 10,
+    backgroundColor: "#FFF",
+    marginBottom: 10,
+  },
+  guardar: {
+    backgroundColor: "#2563EB",
+    padding: 14,
+    borderRadius: 10,
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  cancelar: {
+    backgroundColor: "#EF4444",
+    padding: 14,
+    borderRadius: 10,
+    alignItems: "center",
+    marginBottom: 15,
+  },
+  card: {
+    backgroundColor: "#FFF",
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 10,
+  },
+  nombre: {
+    fontWeight: "bold",
+    fontSize: 16,
+    marginBottom: 5,
+  },
+  botones: {
+    flexDirection: "row",
+    marginTop: 10,
+  },
+  editar: {
+    backgroundColor: "#F59E0B",
+    padding: 10,
+    borderRadius: 8,
+    marginRight: 10,
+  },
+  inactivar: {
+    backgroundColor: "#DC2626",
+    padding: 10,
+    borderRadius: 8,
+  },
+  textoBoton: {
+    color: "#FFF",
+    fontWeight: "bold",
   },
 });

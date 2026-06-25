@@ -24,7 +24,7 @@ export default function Login() {
             `SELECT * FROM usuarios WHERE clave = ? AND activo = 1`,
             [clave.trim()]
           );
-    
+         
           if (!user) {
             Alert.alert("Error", "Usuario no encontrado o inactivo");
             return;
