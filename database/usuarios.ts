@@ -17,7 +17,7 @@ export const initDatabase = async () => {
       fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP
     );
 
-    CREATE TABLE IF NOT EXISTS clientes (
+    CREATE TABLE IF NOT EXISTS cliente (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       idusuario INTEGER,
       nombreC TEXT,

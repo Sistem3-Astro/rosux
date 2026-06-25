@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { View, Text, TextInput,  TouchableOpacity, StyleSheet, Alert, ScrollView } from "react-native";
-import { Picker } from '@react-native-picker/picker';
 import { router } from "expo-router";
 import { useFormulario } from "@/context/FormContext";
 import { useAuth } from '@/context/AuthContext';
@@ -27,14 +26,6 @@ export default function egreso() {
     Alert.alert('Error', 'Ingresa el monto de gastos alimenticios');
     return;
    }
-    if (!formulario.gVeh ) {
-    Alert.alert('Error', 'Ingresa algun monto de gatos en vehiculo ');
-    return;
-   } 
-    if (!formulario.gTransp) {
-    Alert.alert('Error', 'Ingresa algun monto de gatos en transporte ');
-    return;
-   } 
     console.log("Usuario desde egreso:", usuario); 
     Alert.alert("Éxito", "Datos de beneficiario");
     router.push('/datos/beneficiario'); // redireccion a vivienda
@@ -194,17 +185,17 @@ export default function egreso() {
         />
 
          <Text style={styles.label}>¿Tiene créditos activos?Mencionalos</Text>
-                  <TextInput  style={styles.input}
-                   placeholder="Creditos activos"
-                    multiline
-                    numberOfLines={3}
-                    textAlignVertical="top"
-                   value={formulario.creditoAct}
-                   onChangeText={(texto1) => {
-                   const soloLetras = texto1.replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s,$]/g, '');
-                   updateField('creditoAct', soloLetras);
-                   }}
-                   />
+            <TextInput  style={styles.input}
+              placeholder="Creditos activos"
+              multiline
+              numberOfLines={3}
+              textAlignVertical="top"
+              value={formulario.creditoAct}
+              onChangeText={(texto1) => {
+              const soloLetras = texto1.replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s,$]/g, '');
+              updateField('creditoAct', soloLetras);
+              }}
+        />
                
       <TouchableOpacity
         style={styles.boton}
