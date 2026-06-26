@@ -53,7 +53,7 @@ export default function formu() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.subtitulo}> 
+      <Text style={styles.nombre}> 
       Bienvenido {usuario?.nombre_completo.split(' ')[0]}
       </Text>
       <Text style={styles.titulo}>DATOS GENERALES </Text>
@@ -184,10 +184,16 @@ const styles = StyleSheet.create({
     color: "#0D6337",
   },
    titulo: {
-    fontSize: 32,
+    fontSize: 30,
     fontWeight: "bold",
     textAlign: "center",
     color: "#1E3A8A",
+  },
+   nombre: {
+    fontSize: 24,
+    fontWeight: "bold",
+    textAlign: "left", 
+    color: "#3f5eb6",
   },
   subtitulo: {
     fontSize: 18,

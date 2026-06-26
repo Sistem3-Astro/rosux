@@ -3,7 +3,6 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
-import { Slot } from 'expo-router';
 import { AuthProvider } from '@/context/AuthContext';
 
 import { useColorScheme } from '@/hooks/use-color-scheme';
@@ -46,6 +45,13 @@ export default function RootLayout() {
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="login" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="mostrar" options={{ headerShown: true,
+          
+      title: 'Datos del cliente',
+      headerStyle: {
+      backgroundColor: "#0D6337",
+    },
+         }}   />
       </Stack>
 
       <StatusBar style="auto" />

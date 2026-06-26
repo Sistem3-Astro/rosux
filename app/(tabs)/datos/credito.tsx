@@ -43,7 +43,7 @@ export default function credito() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.subtitulo}> 
+      <Text style={styles.nombre}> 
       Bienvenido {usuario?.nombre_completo.split(' ')[0]}
       </Text>
       <Text style={styles.titulo}>DATOS DE CRÉDITO </Text>
@@ -137,6 +137,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     color: "#1E3A8A",
+  },
+  nombre: {
+    fontSize: 32,
+    fontWeight: "bold",
+    textAlign: "right",
+    color: "#4d77eb",
   },
   subtitulo: {
     fontSize: 18,
