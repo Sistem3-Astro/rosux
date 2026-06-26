@@ -308,7 +308,7 @@ const cargarCliente = async (id: number) => {
             <Text>Egresos totales: ${item.egresos}</Text>
 
             <Text
-                style={styles.nombre}
+                style={styles.boton}
                 onPress={() =>
                   router.push({
                     pathname: '/formu',                    
@@ -421,8 +421,17 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 8,
   },
-  textoBoton: {
+   textoBoton: {
     color: "#FFF",
+    fontSize: 18,
     fontWeight: "bold",
+    textAlign:"center"
+  },
+  boton: {
+    backgroundColor: "#2563EB",
+    height: 40,
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
