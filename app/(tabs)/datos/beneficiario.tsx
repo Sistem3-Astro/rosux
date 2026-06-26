@@ -99,8 +99,7 @@ export default function beneficiario() {
   };
     const onChange = (event: DateTimePickerEvent,
      selectedDate?: Date) => {
-       setMostrarCalendario(false);
-   
+       setMostrarCalendario(false);   
        if (selectedDate) {
          updateField('fechaNacBenf', selectedDate);
        }
@@ -177,12 +176,12 @@ export default function beneficiario() {
             > 
               <Picker.Item label="Selecciona parentesco" value="" />
               <Picker.Item label="Esposo/a" value="Esposo/a" />
-              <Picker.Item label="Hijo/a" value="Lamina" />
-              <Picker.Item label="Hermano/a" value="Block o ladrillo" />
-              <Picker.Item label="Primo/a" value="Adobe" />
-              <Picker.Item label="Padre" value="Madera" />
-              <Picker.Item label="Madre" value="Palma" />
-              <Picker.Item label="Cuñado/a" value="Cunado/a" />
+              <Picker.Item label="Hijo/a" value="Hijo/a" />
+              <Picker.Item label="Hermano/a" value="Hermano/a" />
+              <Picker.Item label="Primo/a" value="Primo/a" />
+              <Picker.Item label="Padre" value="Padre" />
+              <Picker.Item label="Madre" value="Madre" />
+              <Picker.Item label="Cuñado/a" value="Cuñado/a" />
               <Picker.Item label="Suegro/a" value="Suegro/a" />
               <Picker.Item label="Tio/a" value="Tio/a" />
               <Picker.Item label="Amigo/a" value="Amigo/a" />

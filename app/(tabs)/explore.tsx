@@ -37,10 +37,17 @@ export default function TabTwoScreen() {
         v.*,
         a.*,
         cd.*,
+        i.*,
+        e.*,
         b.nomBenf,
-        b.edad,
-        b.ingresos,
-        e.gServicio
+        b.lugarNacBenf,
+        b.fechaNacBenf,
+        b.direccionBenf,
+        b.parentesco,
+   edad,
+   ingresos,
+   egresos
+
       FROM cliente c 
       LEFT JOIN vivienda v 
       ON c.id = v.id_cliente
@@ -50,6 +57,8 @@ export default function TabTwoScreen() {
       ON c.id = cd.id_cliente
       LEFT JOIN beneficiario b 
       ON c.id = b.id_cliente
+      LEFT JOIN ingresos i
+      ON c.id = i.id_cliente
       LEFT JOIN egresos e
       ON c.id = e.id_cliente
       WHERE c.idusuario = ?

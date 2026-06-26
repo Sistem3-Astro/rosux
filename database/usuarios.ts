@@ -128,7 +128,7 @@ export const initDatabase = async () => {
       id_cliente INTEGER,
       nomBenf TEXT,
       lugarNacBenf TEXT,
-      fechaNacBenf DATETIME,
+      fechaNacBenf TEXT,
       direccionBenf TEXT,
       parentesco TEXT,
       edad INTEGER,
