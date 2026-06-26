@@ -1,11 +1,15 @@
-import { useState } from "react";
 import { View, Text, TextInput,  TouchableOpacity, StyleSheet, Alert, ScrollView } from "react-native";
 import { Picker } from '@react-native-picker/picker';
 import { router } from "expo-router";
 import { useFormulario } from "@/context/FormContext";
 import { useAuth } from '@/context/AuthContext';
 import {guardarSolicitud} from '@/database/registrar'
+import {actualizar} from '@/database/actualizar'
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
+import { db } from '@/database/usuarios';
+import { useEffect, useState } from "react";
+import { useLocalSearchParams } from "expo-router";
+const { id } = useLocalSearchParams(); 
 
 
 export default function beneficiario() { 
@@ -77,7 +81,13 @@ export default function beneficiario() {
       egresos: totalEgresos,
     };
 
+    
+  if (id) {
+    await actualizar(formularioActualizado, Number(id));
+  } else {
     await guardarSolicitud(formularioActualizado, usuario);
+  }
+
 
     Alert.alert("Éxito", "Registro guardado correctamente",
       [

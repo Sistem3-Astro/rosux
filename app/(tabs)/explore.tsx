@@ -86,13 +86,14 @@ export default function TabTwoScreen() {
             <Text>Fecha de Nacimiento: {item.fechaNac}</Text>
             <Text>Teléfono: {item.telefono}</Text>
             <Text>Producto: {item.producto}</Text>
-         
-            <Text style={styles.nombre}>Editar</Text>
-
+ 
      </TouchableOpacity>
+     
     
-        )} 
+       )} 
       />
+     
+  
       
     </View>
   );

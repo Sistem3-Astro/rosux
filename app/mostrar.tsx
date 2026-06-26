@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { Alert, FlatList, Text,  View, StyleSheet} from "react-native";
 import { useAuth } from '@/context/AuthContext';
 import { useLocalSearchParams } from "expo-router";
+import { router } from "expo-router";
 
 
 export default function TabTwoScreen() {
@@ -75,6 +76,7 @@ export default function TabTwoScreen() {
 const cargarCliente = async (id: number) => {
   const cliente : any[]  = await db.getAllAsync(
     `SELECT
+     c.id AS clienteId,
      c.*,
      v.*,
      a.*,
@@ -223,7 +225,7 @@ const cargarCliente = async (id: number) => {
 
        <FlatList
         data={cliente}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item.clienteId.toString()}
         renderItem={({ item }) => (
           <View style={styles.card}>
             <Text style={styles.titulo}>{item.nombreC} </Text>
@@ -304,11 +306,27 @@ const cargarCliente = async (id: number) => {
             <Text>Parentesco: {item.parentesco}</Text>
             <Text>Ingresos totales: ${item.ingresos}</Text>
             <Text>Egresos totales: ${item.egresos}</Text>
+
+            <Text
+                style={styles.nombre}
+                onPress={() =>
+                  router.push({
+                    pathname: '/formu',                    
+                    params: { id:item.clienteId.toString()},
+                  })
+                }
+              >
+                <Text style={styles.textoBoton}>Editar</Text>
+              </Text>
           </View>
+
+          
         )}
       />
+  
+</View>
       
-    </View>
+    
   );
 }
 

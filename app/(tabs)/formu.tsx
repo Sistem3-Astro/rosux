@@ -1,16 +1,56 @@
-import { useState } from "react";
 import { View, Text, TextInput,  TouchableOpacity, StyleSheet, Alert, ScrollView } from "react-native";
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import { router } from "expo-router";
 import { useFormulario } from "@/context/FormContext";
 import { useAuth } from '@/context/AuthContext';
+import { db } from '@/database/usuarios';
+import { useEffect, useState } from "react";
+import { useLocalSearchParams } from "expo-router"; 
+
 
 
 export default function formu() {
+  const { id } = useLocalSearchParams(); 
+   useEffect(() => {
+    cargarCliente(Number(id));
+  }, []);
+
   const [mostrarCalendario, setMostrarCalendario] = useState(false);
-  const { formulario, updateField } = useFormulario();    
+  const { formulario,setFormulario, updateField } = useFormulario();    
   const { usuario } = useAuth(); 
+
+  const cargarCliente = async (id: number) => {
+  const cliente = await db.getAllAsync(
+    `SELECT
+     c.*,
+     v.*,
+     a.*,
+     cd.*,
+     i.*,
+     e.*,
+     b.*
+     FROM cliente c   
+     LEFT JOIN vivienda v 
+     ON c.id = v.id_cliente  
+     LEFT JOIN actividad a 
+     ON c.id = a.id_cliente 
+     LEFT JOIN credito cd 
+     ON c.id = cd.id_cliente 
+     LEFT JOIN ingresos i 
+     ON c.id = i.id_cliente 
+     LEFT JOIN egresos e 
+     ON c.id = e.id_cliente 
+     LEFT JOIN beneficiario b 
+     ON c.id = b.id_cliente 
+     WHERE c.id = ?`,
+    [Number(id)]
+  );
+
+  if (cliente) {
+    setFormulario(cliente);
+  }
+};
 
   const Siguiente = () => {
     if (!formulario.nombreC || !formulario.lugarNac) {
