@@ -1,12 +1,69 @@
-import { useState } from "react";
 import { View, Text, TextInput,  TouchableOpacity, StyleSheet, Alert, ScrollView } from "react-native";
 import { Picker } from '@react-native-picker/picker';
 import Checkbox from 'expo-checkbox';
 import { useFormulario } from "@/context/FormContext"; 
 import { router } from "expo-router";
+import { db } from '@/database/usuarios';
+import { useEffect, useState } from "react";
+import { useLocalSearchParams } from "expo-router"; 
 
 export default function vivienda() {
-  const { formulario, updateField } = useFormulario(); 
+  const { id } = useLocalSearchParams(); 
+   useEffect(() => {
+    cargarCliente(Number(id));
+  }, []);
+  const { formulario, updateField, setFormulario } = useFormulario(); 
+ const toggleServicio = (servicio: string) => {
+  const serviciosActuales = formulario.servicios ?? [];
+  const nuevosServicios =
+    serviciosActuales.includes(servicio)
+      ? serviciosActuales.filter(
+          (s: string) => s !== servicio
+        ) 
+      : [...serviciosActuales, servicio];
+
+  updateField('servicios', nuevosServicios);
+}; 
+ const cargarCliente = async (id: number) => {
+  const cliente: any = await db.getFirstAsync(
+    `SELECT
+     c.*,
+     v.*,
+     a.*,
+     cd.*,
+     i.*,
+     e.*,
+     b.*
+     FROM cliente c   
+     LEFT JOIN vivienda v 
+     ON c.id = v.id_cliente  
+     LEFT JOIN actividad a 
+     ON c.id = a.id_cliente 
+     LEFT JOIN credito cd 
+     ON c.id = cd.id_cliente 
+     LEFT JOIN ingresos i 
+     ON c.id = i.id_cliente 
+     LEFT JOIN egresos e 
+     ON c.id = e.id_cliente 
+     LEFT JOIN beneficiario b 
+     ON c.id = b.id_cliente 
+     WHERE c.id = ?`,
+    [Number(id)]
+  );
+
+  if (cliente) {
+    
+     setFormulario({
+    ...cliente,
+    servicios: cliente.servicios
+      ?  JSON.parse(cliente.servicios)
+      : [],
+    haberesH: cliente.haberesH
+      ? JSON.parse(cliente.haberesH)
+      : [],
+  });
+  }
+};
   
 const listaServicios = [
   'Agua potable',
@@ -28,17 +85,7 @@ const listaHaberes = [
   'Horno de microondas',
 ];
 
-const toggleServicio = (servicio: string) => {
-  const serviciosActuales = formulario.servicios ?? [];
-  const nuevosServicios =
-    serviciosActuales.includes(servicio)
-      ? serviciosActuales.filter(
-          (s: string) => s !== servicio
-        )
-      : [...serviciosActuales, servicio];
 
-  updateField('servicios', nuevosServicios);
-}; 
 
 const toggleHaber = (haber: string) => {
   const haberActual = formulario.haberesH ?? [];

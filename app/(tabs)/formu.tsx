@@ -21,7 +21,7 @@ export default function formu() {
   const { usuario } = useAuth(); 
 
   const cargarCliente = async (id: number) => {
-  const cliente = await db.getAllAsync(
+  const cliente = await db.getFirstAsync(
     `SELECT
      c.*,
      v.*,
@@ -48,6 +48,7 @@ export default function formu() {
   );
 
   if (cliente) {
+    
     setFormulario(cliente);
   }
 };
