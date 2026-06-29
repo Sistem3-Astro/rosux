@@ -83,7 +83,7 @@ export default function TabTwoScreen() {
             <Text>Registro: {item.fecha_creacion.split(" ")[0]}</Text>   
             <Text>Lugar Nacimiento: {item.lugarNac}</Text>            
             <Text>Edad: {item.edad}</Text>
-            <Text>Fecha de Nacimiento: {item.fechaNac}</Text>
+            <Text>Fecha de Nacimiento: {item.fechaNac.split("T")[0]}</Text>
             <Text>Teléfono: {item.telefono}</Text>
             <Text>Producto: {item.producto}</Text>
  

@@ -4,11 +4,13 @@ import { Picker } from '@react-native-picker/picker';
 import { router } from "expo-router";
 import { useFormulario } from "@/context/FormContext";
 import { useAuth } from '@/context/AuthContext';
+import { useLocalSearchParams } from "expo-router"; 
 
 
 export default function ingreso() { 
   const { formulario, updateField } = useFormulario();    
-  const { usuario } = useAuth(); 
+  const { usuario } = useAuth();  
+  const { id } = useLocalSearchParams(); 
 
   const Siguiente = () => {
     if (formulario.salario === '' || formulario.salario === null) {
@@ -24,7 +26,6 @@ export default function ingreso() {
     Alert.alert("Éxito", "Datos de egresos");
     router.push('/datos/egreso'); // redireccion a vivienda
   };
-
   
 
   return (

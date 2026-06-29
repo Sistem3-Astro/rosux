@@ -3,6 +3,7 @@ import React, { createContext, useContext, useState } from "react";
 export const FormContext = createContext<any>(null);
 // 2. Provider (memoria global)
 export const FormProvider = ({ children }: any) => {
+const [clienteId, setClienteId] = useState<number | null>(null);
   const [formulario, setFormulario] = useState({
     idUsuario: "",
     idCliente:null,  
@@ -168,6 +169,7 @@ export const FormProvider = ({ children }: any) => {
     
      
     });
+    setClienteId(null);
   };
 
   return (
@@ -175,6 +177,8 @@ export const FormProvider = ({ children }: any) => {
       formulario, 
       setFormulario,
       updateField,
+      setClienteId,
+      clienteId,
       resetFormulario }}>
       {children}
     </FormContext.Provider>

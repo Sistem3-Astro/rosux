@@ -3,11 +3,14 @@ import { View, Text, TextInput,  TouchableOpacity, StyleSheet, Alert, ScrollView
 import { router } from "expo-router";
 import { useFormulario } from "@/context/FormContext";
 import { useAuth } from '@/context/AuthContext';
+import { useLocalSearchParams } from "expo-router"; 
+
 
 
 export default function egreso() { 
   const { formulario, updateField } = useFormulario();    
-  const { usuario } = useAuth(); 
+  const { usuario } = useAuth();   
+  const { id } = useLocalSearchParams(); 
 
   const Siguiente = () => {
     if (!formulario.gServicio ) {
@@ -31,7 +34,6 @@ export default function egreso() {
     router.push('/datos/beneficiario'); // redireccion a vivienda
   };
 
-  
 
   return (
     <ScrollView contentContainerStyle={styles.container}>

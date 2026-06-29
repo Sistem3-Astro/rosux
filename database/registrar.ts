@@ -1,5 +1,12 @@
 import { useAuth } from "@/context/AuthContext";
 import { db } from '@/database/usuarios';
+const convertirFecha = (fecha: any) => {
+  if (!fecha) return null;
+
+  return fecha instanceof Date
+    ? fecha.toISOString()
+    : new Date(fecha).toISOString();
+};
 export async function guardarSolicitud(formulario: any, usuario: any) {
   // INSERT cliente
   const resultado = await db.runAsync(
@@ -16,7 +23,7 @@ export async function guardarSolicitud(formulario: any, usuario: any) {
   [
     usuario.id,
     formulario.nombreC,
-    formulario.fechaNac?.toISOString() ?? null,
+    convertirFecha(formulario.fechaNac),
     formulario.lugarNac,
     formulario.genero,
     formulario.telefono,
@@ -88,7 +95,7 @@ await db.runAsync(
     formulario.telefonoNeg,
     formulario.nombreConyuge,
     formulario.lugarNacConyuge,
-    formulario.fechaNacConyuge?.toISOString() ?? null,
+    convertirFecha(formulario.fechaNacConyuge),
     formulario.telefonoConyuge,
     formulario.ocupacionConyuge,
     formulario.antiguedadLConyuge,
@@ -188,7 +195,7 @@ await db.runAsync(
     idCliente,
     formulario.nomBenf,
     formulario.lugarNacBenf,
-    formulario.fechaNacBenf,
+    convertirFecha(formulario.fechaNacBenf),
     formulario.direccionBenf,
     formulario.parentesco,
     formulario.edad,

@@ -13,17 +13,7 @@ export default function vivienda() {
     cargarCliente(Number(id));
   }, []);
   const { formulario, updateField, setFormulario } = useFormulario(); 
- const toggleServicio = (servicio: string) => {
-  const serviciosActuales = formulario.servicios ?? [];
-  const nuevosServicios =
-    serviciosActuales.includes(servicio)
-      ? serviciosActuales.filter(
-          (s: string) => s !== servicio
-        ) 
-      : [...serviciosActuales, servicio];
-
-  updateField('servicios', nuevosServicios);
-}; 
+ 
  const cargarCliente = async (id: number) => {
   const cliente: any = await db.getFirstAsync(
     `SELECT
@@ -52,15 +42,21 @@ export default function vivienda() {
   );
 
   if (cliente) {
+    const haberes = cliente.haberesH
+      ? JSON.parse(cliente.haberesH)
+      : [];
+
+    console.log(haberes);
+    console.log(Array.isArray(haberes));
+    console.log("Tipo:", typeof formulario.haberesH);
+    console.log("Es arreglo:", Array.isArray(formulario.haberesH));
     
      setFormulario({
     ...cliente,
     servicios: cliente.servicios
       ?  JSON.parse(cliente.servicios)
       : [],
-    haberesH: cliente.haberesH
-      ? JSON.parse(cliente.haberesH)
-      : [],
+    haberesH: haberes,
   });
   }
 };
@@ -84,18 +80,34 @@ const listaHaberes = [
   'Motocicleta',
   'Horno de microondas',
 ];
+const toggleServicio = (servicio: string) => {
+  console.log("Antes:", formulario.servicios);
+  console.log("Es arreglo:", Array.isArray(formulario.servicios));
 
+  const serviciosActuales = Array.isArray(formulario.servicios)
+    ? formulario.servicios
+    : [];
+
+  const nuevosServicios = serviciosActuales.includes(servicio)
+    ? serviciosActuales.filter((s: string) => s !== servicio)
+    : [...serviciosActuales, servicio];
+
+  console.log("Nuevo:", nuevosServicios);
+  updateField("servicios", nuevosServicios);
+};
 
 
 const toggleHaber = (haber: string) => {
-  const haberActual = formulario.haberesH ?? [];
-  const nuevosHaberes =
-    haberActual.includes(haber)
-      ? haberActual.filter(
-          (h: string) => h !== haber
-        )
+  console.log("Antes:", formulario.haberesH);
+  console.log("Es arreglo:", Array.isArray(formulario.haberesH));
+  const haberActual = Array.isArray(formulario.haberesH)
+    ? formulario.haberesH
+    : [];
+  const nuevosHaberes = haberActual.includes(haber)
+      ? haberActual.filter((h: string) => h !== haber )
       : [...haberActual, haber];
 
+  console.log("Nuevo haber:", nuevosHaberes);
   updateField('haberesH', nuevosHaberes);
 };
 
@@ -232,9 +244,7 @@ const toggleHaber = (haber: string) => {
         </View>
       ))}
 
-      <Text>
-        Haberes: {formulario.haberesH.join(', ')}
-      </Text>
+      <Text>{JSON.stringify(formulario.haberesH)}</Text>
     </View>
 
        <Text style={styles.label}>Servicios</Text>
@@ -259,7 +269,7 @@ const toggleHaber = (haber: string) => {
       ))}
 
       <Text>
-        Servicios: {formulario.servicios.join(', ')}
+         <Text>{JSON.stringify(formulario.servicios)}</Text>
       </Text>
     </View>
 

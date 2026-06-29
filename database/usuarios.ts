@@ -150,7 +150,7 @@ export const initDatabase = async () => {
   if (!admin) {
     const hash = await Crypto.digestStringAsync(
       Crypto.CryptoDigestAlgorithm.SHA256,
-      'AdminTI2602'
+      'Saul123'
     );
 
     await db.runAsync(

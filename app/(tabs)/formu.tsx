@@ -11,17 +11,16 @@ import { useLocalSearchParams } from "expo-router";
 
 
 export default function formu() {
+  const [mostrarCalendario, setMostrarCalendario] = useState(false);
+  const { formulario,setFormulario, updateField, setClienteId } = useFormulario();    
+  const { usuario } = useAuth(); 
   const { id } = useLocalSearchParams(); 
    useEffect(() => {
     cargarCliente(Number(id));
-  }, []);
+  }, [id]);
 
-  const [mostrarCalendario, setMostrarCalendario] = useState(false);
-  const { formulario,setFormulario, updateField } = useFormulario();    
-  const { usuario } = useAuth(); 
-
-  const cargarCliente = async (id: number) => {
-  const cliente = await db.getFirstAsync(
+ const cargarCliente = async (id: number) => {
+  const cliente: any = await db.getFirstAsync(
     `SELECT
      c.*,
      v.*,
@@ -49,7 +48,11 @@ export default function formu() {
 
   if (cliente) {
     
-    setFormulario(cliente);
+    setFormulario({
+      ...cliente,
+       idCliente: cliente.id,
+      
+    });
   }
 };
 
@@ -85,7 +88,7 @@ export default function formu() {
   };
 
    const onChange = (event: DateTimePickerEvent,
-  selectedDate?: Date) => {
+   selectedDate?: Date) => {
     setMostrarCalendario(false);
     if (selectedDate) {
       updateField('fechaNac', selectedDate);
@@ -151,7 +154,7 @@ export default function formu() {
         <Picker.Item label="Seleccione un género" value="" />
         <Picker.Item label="Masculino" value="Masculino" />
         <Picker.Item label="Femenino" value="Femenino" />
-        <Picker.Item label="No binario" value="Otro" />
+        <Picker.Item label="No binario" value="No binario" />
       </Picker>
       </View>
 
@@ -161,14 +164,14 @@ export default function formu() {
         selectedValue={formulario.estadocivil}
         onValueChange={(itemValue: string) => updateField('estadoCivil', itemValue)}
       >
-        <Picker.Item label="Estado civil" value="" />
-        <Picker.Item label="Soltero"   value="Soltero" />
+        <Picker.Item label="Seleccione un estado civil" value="" />
+        <Picker.Item label="Soltero" value="Soltero" />
         <Picker.Item label="Casado(a) bienes separados" value="Casado(a) bienes separados" />
         <Picker.Item label="Casado(a) bienes mancomunados" value="Casado(a) bienes mancomunados" />
         <Picker.Item label="Divorciado(a)" value="Divorciado(a)" />
         <Picker.Item label="Viudo(a)" value="Viudo(a)" />
         <Picker.Item label="Separado(a)" value="Separado(a)" />
-        <Picker.Item label="Concubinato/Unión libre" value="Concubinato/Unión libre" />
+        <Picker.Item label="Concubinato/Union libre" value="Concubinato/Union libre" />
       </Picker>
       </View> 
 
@@ -185,8 +188,8 @@ export default function formu() {
         }}
       />
 
-       <Text style={styles.label}>Escolaridad</Text>
-     <View style={styles.pickerContainer}>
+      <Text style={styles.label}>Escolaridad</Text>
+      <View style={styles.pickerContainer}>
       <Picker
         selectedValue={formulario.escolaridad}
         onValueChange={(itemValue: string) => updateField('escolaridad', itemValue)}  
@@ -198,7 +201,6 @@ export default function formu() {
         <Picker.Item label="Media Superior(Bachillerato/Preparatoria)" value="Media Superior(Bachillerato/Preparatoria)" />
         <Picker.Item label="Superior(Licenciatura/Ingenieria/Profesional)" value="Superior(Licenciatura/Ingenieria/Profesional)" />
         <Picker.Item label="Posgrado" value="Posgrado" />
-       
       </Picker>
       </View> 
 

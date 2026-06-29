@@ -13,9 +13,17 @@ const { id } = useLocalSearchParams();
 
 
 export default function beneficiario() { 
-  const { formulario, updateField, resetFormulario } = useFormulario();    
+  const { formulario, updateField, resetFormulario} = useFormulario();    
   const { usuario } = useAuth(); 
+  const { clienteId } = useFormulario();
   const [mostrarCalendario, setMostrarCalendario] = useState(false);
+  const onChange = (event: DateTimePickerEvent,
+     selectedDate?: Date) => {
+       setMostrarCalendario(false);   
+       if (selectedDate) {
+         updateField('fechaNacBenf', selectedDate);
+       }
+     };
 
    const calcularEdad = (fechaNacimiento: Date) => {
     const hoy = new Date();
@@ -82,15 +90,23 @@ export default function beneficiario() {
     };
 
     
-  if (id) {
-    await actualizar(formularioActualizado, Number(id));
+  if (formulario.idCliente) {
+    console.log("id cliente a editar", formulario.idCliente);
+    await actualizar(formularioActualizado, formulario.idCliente);
+    
+  Alert.alert("Éxito", "Registro actualizado correctamente", [
+    {
+      text: "Aceptar",
+      onPress: () => {
+        resetFormulario();
+        router.replace("/(tabs)/formu");
+      },
+    },
+  ]);
+
   } else {
     await guardarSolicitud(formularioActualizado, usuario);
-  }
-
-
-    Alert.alert("Éxito", "Registro guardado correctamente",
-      [
+    Alert.alert("Éxito", "Registro guardado correctamente", [
         {
           text: "Aceptar",
           onPress: () => {
@@ -100,6 +116,7 @@ export default function beneficiario() {
         },
       ]
     );
+  }
 
   } catch (error) {
     console.error("Error al guardar:", error);
@@ -107,14 +124,7 @@ export default function beneficiario() {
   }
 
   };
-    const onChange = (event: DateTimePickerEvent,
-     selectedDate?: Date) => {
-       setMostrarCalendario(false);   
-       if (selectedDate) {
-         updateField('fechaNacBenf', selectedDate);
-       }
-     };
-
+  
        
   
 

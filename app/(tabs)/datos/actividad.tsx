@@ -4,11 +4,13 @@ import { Picker } from '@react-native-picker/picker';
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import { router } from "expo-router";
 import { useFormulario } from "@/context/FormContext"; 
+import { useLocalSearchParams } from "expo-router"; 
 
 
 export default function actividad() {
   const [mostrarCalendario, setMostrarCalendario] = useState(false);
   const { formulario, updateField } = useFormulario();     
+  const { id } = useLocalSearchParams(); 
 
   const Siguiente = () => {
     if (!formulario.actividadE || !formulario.actividadEAd || !formulario.domicilioNeg ) {

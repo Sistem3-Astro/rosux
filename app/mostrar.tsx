@@ -233,6 +233,7 @@ const cargarCliente = async (id: number) => {
             <Text>Edad: {item.edad}</Text>
             <Text>Fecha de Nacimiento: {item.fechaNac?.split("T")[0]}</Text>
             <Text>Teléfono: {item.telefono}</Text>
+            <Text>Genero: {item.genero}</Text>
             <Text>Estado Civil: {item.estadoCivil}</Text>
             <Text>Escolaridad: {item.escolaridad}</Text>
 

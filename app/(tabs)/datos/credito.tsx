@@ -2,14 +2,15 @@ import { useState } from "react";
 import { View, Text, TextInput,  TouchableOpacity, StyleSheet, Alert, ScrollView } from "react-native";
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
-import { router } from "expo-router";
+import { router, usePathname } from "expo-router";
 import { useFormulario } from "@/context/FormContext";
 import { useAuth } from '@/context/AuthContext';
-
+import { useLocalSearchParams } from "expo-router"; 
 
 export default function credito() {
-  const { formulario, updateField } = useFormulario();    
-  const { usuario } = useAuth(); 
+  const { formulario, updateField } = useFormulario();     
+  const { usuario } = useAuth();    
+  const { id } = useLocalSearchParams(); 
 
   const Siguiente = () => {
     if (!formulario.producto ) {
@@ -36,10 +37,7 @@ export default function credito() {
     console.log("Usuario desde credito:", usuario); 
     Alert.alert("Éxito", "Datos de Ingresos"); 
     router.push('/datos/ingreso');
-
   }; 
-
-  
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
