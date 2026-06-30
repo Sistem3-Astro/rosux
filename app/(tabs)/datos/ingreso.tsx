@@ -1,16 +1,13 @@
 import { useState } from "react";
 import { View, Text, TextInput,  TouchableOpacity, StyleSheet, Alert, ScrollView } from "react-native";
-import { Picker } from '@react-native-picker/picker';
 import { router } from "expo-router";
 import { useFormulario } from "@/context/FormContext";
 import { useAuth } from '@/context/AuthContext';
-import { useLocalSearchParams } from "expo-router"; 
 
 
 export default function ingreso() { 
   const { formulario, updateField } = useFormulario();    
   const { usuario } = useAuth();  
-  const { id } = useLocalSearchParams(); 
 
   const Siguiente = () => {
     if (formulario.salario === '' || formulario.salario === null) {
