@@ -6,13 +6,14 @@ import { useFormulario } from "@/context/FormContext";
 import { useAuth } from '@/context/AuthContext';
 import { db } from '@/database/usuarios';
 import { useEffect, useState } from "react";
-import { useLocalSearchParams } from "expo-router"; 
+import { useLocalSearchParams } from "expo-router";
+import Entypo from '@expo/vector-icons/Entypo'; 
 
 
 
 export default function formu() {
   const [mostrarCalendario, setMostrarCalendario] = useState(false);
-  const { formulario,setFormulario, updateField, setClienteId } = useFormulario();    
+  const { formulario,setFormulario, updateField, setClienteId, resetFormulario } = useFormulario();    
   const { usuario } = useAuth(); 
   const { id } = useLocalSearchParams(); 
    useEffect(() => {
@@ -87,6 +88,28 @@ export default function formu() {
     router.push('/datos/vivienda'); // redireccion a vivienda
   };
 
+  const Limpiar = () => {
+    Alert.alert(
+    "Eliminar",
+    "¿Deseas eliminar todos los datos capturados o a editar?",
+    [
+      {
+        text: "Cancelar",
+        style: "cancel",
+      },
+      {
+        text: "Eliminar",
+        style: "destructive",
+        onPress: () => {
+          resetFormulario();
+          Alert.alert("Éxito", "Datos eliminados correctamente.");
+        },
+      },
+    ],
+    { cancelable: true }
+  );  
+  };
+
    const onChange = (event: DateTimePickerEvent,
    selectedDate?: Date) => {
     setMostrarCalendario(false);
@@ -102,6 +125,10 @@ export default function formu() {
       </Text>
       <Text style={styles.titulo}>DATOS GENERALES </Text>
       <Text style={styles.subtitulo}>Ingresa los datos solicitados</Text>
+       <Text style={styles.nombre1}>Limpiar
+        <TouchableOpacity style={styles.limp}
+        onPress={Limpiar}>
+          <Entypo name="trash" size={33} color="white" /></TouchableOpacity></Text>
 
       <Text style={styles.label}>Nombre del cliente</Text>
       <TextInput
@@ -238,6 +265,13 @@ const styles = StyleSheet.create({
     textAlign: "left", 
     color: "#3f5eb6",
   },
+  nombre1: {
+    fontSize: 15,
+    fontWeight: "bold",
+    textAlign: "left", 
+    color: "#92acf5",    
+    alignSelf: "flex-end",
+  },
   subtitulo: {
     fontSize: 18,
     textAlign: "center",
@@ -260,11 +294,20 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF",
   },
   boton: {
-    backgroundColor: "#2563EB",
+    backgroundColor: "#2FA084",
     height: 50,
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
+  },
+  limp: {
+    backgroundColor: "#d64b0b",
+    height: 35,
+    width:35,
+    borderRadius: 5,
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "flex-end",
   },
   textoBoton: {
     color: "#FFF",

@@ -10,6 +10,7 @@ import { useLocalSearchParams } from "expo-router";
 export default function vivienda() {
   const { id } = useLocalSearchParams(); 
    useEffect(() => {
+    console.log("useEffect Vivienda");
     cargarCliente(Number(id));
   }, []);
   const { formulario, updateField, setFormulario } = useFormulario(); 
@@ -81,9 +82,9 @@ const listaHaberes = [
   'Horno de microondas',
 ];
 const toggleServicio = (servicio: string) => {
+   console.log("Click checkbox servi: ");
   console.log("Antes:", formulario.servicios);
   console.log("Es arreglo:", Array.isArray(formulario.servicios));
-
   const serviciosActuales = Array.isArray(formulario.servicios)
     ? formulario.servicios
     : [];
@@ -98,6 +99,7 @@ const toggleServicio = (servicio: string) => {
 
 
 const toggleHaber = (haber: string) => {
+   console.log("Click checkbox haber: ");
   console.log("Antes:", formulario.haberesH);
   console.log("Es arreglo:", Array.isArray(formulario.haberesH));
   const haberActual = Array.isArray(formulario.haberesH)

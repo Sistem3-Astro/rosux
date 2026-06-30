@@ -1,5 +1,4 @@
 import { Tabs } from 'expo-router';
-import React, { useEffect } from 'react';
 import { HapticTab } from '@/components/haptic-tab';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import { Colors } from '@/constants/theme';
@@ -7,18 +6,84 @@ import { useColorScheme } from '@/hooks/use-color-scheme';
 import { FormProvider } from '@/context/FormContext'; 
 import { TouchableOpacity, Alert } from "react-native";
 import { Text } from "react-native";
+import AntDesign from '@expo/vector-icons/AntDesign';
+import { useAuth } from "@/context/AuthContext";
+import { router } from "expo-router";
+import { Modal, View, StyleSheet } from "react-native";
+import { useEffect, useState } from "react";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const {logout} = useAuth();
+  const [visible, setVisible] = useState(false);
+  
+  const Session = () => {
+    Alert.alert(
+    "Salir",
+    "¿Deseas cerrar sesion?",
+    [
+      {
+        text: "No",
+        style: "cancel",
+      },
+      {
+        text: "Si",
+        style: "destructive",
+        onPress: () => {          
+          Alert.alert("Sacimex", "Vuelve pronto");
+          logout();
+          router.replace("/login");
+        },
+      },
+    ],
+    { cancelable: true }
+  );  
+  };
+
+  
  
 
   return ( 
     <FormProvider>
+       <Modal
+  visible={visible}
+  transparent
+  animationType="fade"
+>
+  <View style={styles.nombre1}>
+    <View style={styles.nombre1}>
+      <Text style={styles.nombre1}>Cerrar sesión</Text>
+
+      <Text style={styles.nombre1}>
+        ¿Deseas cerrar tu sesión?
+      </Text>
+
+      <View style={styles.nombre1}>
+        <TouchableOpacity onPress={() => setVisible(false)} >
+          <Text>Cancelar</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={Session}>
+          <Text style={{ color: "red" }}>Cerrar sesión</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  </View>
+</Modal>
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
         tabBarButton: HapticTab,
+        headerRight: () => (
+      <TouchableOpacity
+        style={{ marginRight: 25 }} onPress={() => setVisible(true)}
+      >
+        <Text>
+          <AntDesign name="poweroff" size={30} color="black" />
+        </Text>
+      </TouchableOpacity>
+        ),
       }}>
      
     <Tabs.Screen
@@ -30,20 +95,8 @@ export default function TabLayout() {
       headerStyle: {
       backgroundColor: "#0D6337",
     },
-    headerTintColor: "#fff",
-     headerRight: () => (
-      <TouchableOpacity
-    style={{ marginRight: 25 }}
-    onPress={() => Alert.alert("Cerrar sesión")}
-  >
-    <Text style={{ color: "#fff", fontSize: 16 }}>
-      Salir
-    </Text>
-  </TouchableOpacity>
-    ),
-      tabBarIcon: ({ color }) => (
-        <IconSymbol size={28} name="doc.text.fill" color={color} />
-      ),
+     
+      
     }}
   />
   <Tabs.Screen
@@ -117,10 +170,6 @@ export default function TabLayout() {
       headerStyle: {
       backgroundColor: "#0D6337",
     },
-    headerTintColor: "#fff",
-      tabBarIcon: ({ color }) => (
-        <IconSymbol size={28} name="doc.text.fill" color={color} />
-      ),
     }}
   />
      </Tabs>
@@ -128,3 +177,19 @@ export default function TabLayout() {
   );
 } 
  
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#0D6337",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  nombre1: {
+    fontSize: 15,
+    fontWeight: "bold",
+    textAlign: "left", 
+    color: "#92acf5",    
+    alignSelf: "flex-end",
+  },
+
+})

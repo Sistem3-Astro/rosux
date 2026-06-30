@@ -12,6 +12,7 @@ export default function beneficiario() {
   const { formulario, updateField, resetFormulario} = useFormulario();    
   const { usuario } = useAuth(); 
   const [mostrarCalendario, setMostrarCalendario] = useState(false);
+
   const onChange = (event: DateTimePickerEvent,
      selectedDate?: Date) => {
        setMostrarCalendario(false);   
@@ -118,16 +119,11 @@ export default function beneficiario() {
     Alert.alert("Error", "No fue posible guardar el registro"  );
   }
 
-  };
-  
-       
+  };   
   
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.subtitulo}> 
-      Bienvenido {usuario?.nombre_completo.split(' ')[0]}
-      </Text>
       <Text style={styles.titulo}>DATOS DE BENEFICIARIO </Text>
       <Text style={styles.subtitulo}>Ingresa los datos solicitados</Text>
 
@@ -223,7 +219,6 @@ export default function beneficiario() {
         value={Number(totalEgresos || 0).toFixed(2)}
         editable={false}
       />
-        
                
       <TouchableOpacity
         style={styles.boton}

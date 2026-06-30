@@ -1,10 +1,8 @@
 import { useState } from "react";
-import { View, Text, TextInput,  TouchableOpacity, StyleSheet, Alert, ScrollView } from "react-native";
-import { Picker } from '@react-native-picker/picker';
+import { Text, TextInput,  TouchableOpacity, StyleSheet, Alert, ScrollView } from "react-native";
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import { router } from "expo-router";
 import { useFormulario } from "@/context/FormContext"; 
-import { useLocalSearchParams } from "expo-router"; 
 
 
 export default function actividad() {
@@ -291,8 +289,6 @@ export default function actividad() {
                     updateField('ref2Telefono', soloNumeros);
                   }}
          />
-
-      
 
       <TouchableOpacity
         style={styles.boton}

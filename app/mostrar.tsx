@@ -229,84 +229,84 @@ const cargarCliente = async (id: number) => {
         renderItem={({ item }) => (
           <View style={styles.card}>
             <Text style={styles.titulo}>{item.nombreC} </Text>
-            <Text>Lugar Nacimiento: {item.lugarNac}</Text>            
-            <Text>Edad: {item.edad}</Text>
-            <Text>Fecha de Nacimiento: {item.fechaNac?.split("T")[0]}</Text>
-            <Text>Teléfono: {item.telefono}</Text>
-            <Text>Genero: {item.genero}</Text>
-            <Text>Estado Civil: {item.estadoCivil}</Text>
-            <Text>Escolaridad: {item.escolaridad}</Text>
+            <Text><Text style={styles.colorT}>Lugar Nacimiento:</Text> {item.lugarNac} </Text>
+            <Text><Text style={styles.colorT}>Edad:</Text> {item.edad}</Text>
+            <Text><Text style={styles.colorT}>Fecha de Nacimiento:</Text> {item.fechaNac?.split("T")[0]}</Text>
+            <Text><Text style={styles.colorT}>Teléfono:</Text> {item.telefono}</Text>
+            <Text><Text style={styles.colorT}>Genero: </Text>{item.genero}</Text>
+            <Text><Text style={styles.colorT}>Estado Civil: </Text> {item.estadoCivil}</Text>
+            <Text><Text style={styles.colorT}>Escolaridad: </Text> {item.escolaridad}</Text>
 
             <Text style={styles.nombre}>Vivienda</Text>
-            <Text>Dirección: {item.direccionC}</Text>
-            <Text>Entre Calles: {item.entreCalle}</Text>
-            <Text>Vivienda: {item.vivienda}</Text>
-            <Text>Tiempo de habitar: {item.tiempoHab}</Text>
-            <Text>Tipo de vivienda: {item.tipoViv}</Text>            
-            <Text>Haberes: {item.haberesH}</Text>
-            <Text>Servicios: {item.servicios}</Text>
-            <Text>Valor de vivienda: ${item.valorV}</Text>
-            <Text>Descripcion de vivienda: {item.descripV}</Text>
+            <Text><Text style={styles.colorT}>Dirección: </Text>{item.direccionC}</Text>
+            <Text><Text style={styles.colorT}>Entre Calles: </Text>{item.entreCalle}</Text>
+            <Text><Text style={styles.colorT}>Vivienda: </Text>{item.vivienda}</Text>
+            <Text><Text style={styles.colorT}>Tiempo de habitar:</Text> {item.tiempoHab}</Text>
+            <Text><Text style={styles.colorT}>Tipo de vivienda:</Text> {item.tipoViv}</Text>            
+            <Text><Text style={styles.colorT}>Haberes:</Text> {item.haberesH}</Text>
+            <Text><Text style={styles.colorT}>Servicios:</Text> {item.servicios}</Text>
+            <Text><Text style={styles.colorT}>Valor de vivienda:</Text> ${item.valorV}</Text>
+            <Text><Text style={styles.colorT}>Descripcion de vivienda:</Text> {item.descripV}</Text>
 
             <Text style={styles.nombre}>Actividad economica</Text>
-            <Text>Actividad economica: {item.actividadE}</Text>
-            <Text>Actividad económica adicional: {item.actividadEAd}</Text>
-            <Text>Antigüedad laboral: {item.antiguedadL}</Text>
-            <Text>Domicilio del negocio: {item.domicilioNeg}</Text>
-            <Text>Teléfono del negocio: {item.telefonoNeg}</Text>
-            <Text>Nombre del cónyuge: {item.nombreConyuge}</Text>
-            <Text>Lugar de nacimiento del cónyuge: {item.lugarNacConyuge}</Text>
-            <Text>Fecha de nacimiento del cónyuge: {item.fechaNacConyuge}</Text>
-            <Text>Teléfono del cónyuge: {item.telefonoConyuge}</Text>
-            <Text>Ocupación del cónyuge: {item.ocupacionConyuge}</Text>
-            <Text>Antigüedad laboral del cónyuge: {item.antiguedadLConyuge}</Text>
-            <Text>Dirección laboral del cónyuge: {item.direccionLConyuge}</Text>
-            <Text>Nombre de los hijos: {item.nombreHijos}</Text>
+            <Text><Text style={styles.colorT}>Actividad economica: </Text>{item.actividadE}</Text>
+            <Text><Text style={styles.colorT}>Actividad económica adicional:</Text> {item.actividadEAd}</Text>
+            <Text><Text style={styles.colorT}>Antigüedad laboral: </Text> {item.antiguedadL}</Text>
+            <Text><Text style={styles.colorT}>Domicilio del negocio:</Text> {item.domicilioNeg}</Text>
+            <Text><Text style={styles.colorT}>Teléfono del negocio: </Text>{item.telefonoNeg}</Text>
+            <Text><Text style={styles.colorT}>Nombre del cónyuge:</Text> {item.nombreConyuge}</Text>
+            <Text><Text style={styles.colorT}>Lugar de nacimiento del cónyuge:</Text> {item.lugarNacConyuge}</Text>
+            <Text><Text style={styles.colorT}>Fecha de nacimiento del cónyuge:</Text> {item.fechaNacConyuge?.split("T")[0]}</Text>
+            <Text><Text style={styles.colorT}>Teléfono del cónyuge:</Text> {item.telefonoConyuge}</Text>
+            <Text><Text style={styles.colorT}>Ocupación del cónyuge:</Text> {item.ocupacionConyuge}</Text>
+            <Text><Text style={styles.colorT}>Antigüedad laboral del cónyuge: </Text>{item.antiguedadLConyuge}</Text>
+            <Text><Text style={styles.colorT}>Dirección laboral del cónyuge: </Text>{item.direccionLConyuge}</Text>
+            <Text><Text style={styles.colorT}>Nombre de los hijos:</Text> {item.nombreHijos}</Text>
             <Text style={styles.subtitulo}>Referencia 1</Text>
-            <Text>Nombre: {item.ref1Nombre}</Text>
-            <Text>Dirección: {item.ref1Direccion}</Text>
-            <Text>Teléfono: {item.ref1Telefono}</Text>
+            <Text><Text style={styles.colorT}>Nombre: </Text>{item.ref1Nombre}</Text>
+            <Text><Text style={styles.colorT}>Dirección:</Text> {item.ref1Direccion}</Text>
+            <Text><Text style={styles.colorT}>Teléfono: </Text>{item.ref1Telefono}</Text>
             <Text style={styles.subtitulo}>Referencia 2</Text>
-            <Text>Nombre: {item.ref2Nombre}</Text>
-            <Text>Dirección: {item.ref2Direccion}</Text>
-            <Text>Teléfono: {item.ref2Telefono}</Text>
+            <Text><Text style={styles.colorT}>Nombre:</Text> {item.ref2Nombre}</Text>
+            <Text><Text style={styles.colorT}>Dirección:</Text> {item.ref2Direccion}</Text>
+            <Text><Text style={styles.colorT}>Teléfono: </Text>{item.ref2Telefono}</Text>
 
              <Text style={styles.nombre}>Credito</Text>
-             <Text>Producto: {item.producto}</Text>
-             <Text>Monto: {item.monto}</Text>
-             <Text>Plazo: {item.plazo}</Text>
-             <Text>Frecuencia: {item.frecuencia}</Text>
-             <Text>Motivo: {item.motivo}</Text>
+             <Text><Text style={styles.colorT}>Producto: </Text>{item.producto}</Text>
+             <Text><Text style={styles.colorT}>Monto: </Text>{item.monto}</Text>
+             <Text><Text style={styles.colorT}>Plazo: </Text>{item.plazo}</Text>
+             <Text><Text style={styles.colorT}>Frecuencia:</Text> {item.frecuencia}</Text>
+             <Text><Text style={styles.colorT}>Motivo:</Text> {item.motivo}</Text>
 
              <Text style={styles.nombre}>Ingresos</Text>
-             <Text>Salario: $ {item.salario}</Text>
-             <Text>Ventas: $ {item.ventas}</Text>
-             <Text>Otros ingresos: $ {item.otrosIngresos}</Text>
-             <Text>Ingreson del conyuge: $ {item.ingresoConyuge}</Text>
+             <Text><Text style={styles.colorT}>Salario: $</Text> {item.salario}</Text>
+             <Text><Text style={styles.colorT}>Ventas: $</Text>  {item.ventas}</Text>
+             <Text><Text style={styles.colorT}>Otros ingresos: $</Text>  {item.otrosIngresos}</Text>
+             <Text><Text style={styles.colorT}>Ingreson del conyuge: $</Text> {item.ingresoConyuge}</Text>
 
              <Text style={styles.nombre}>Egresos</Text>
-            <Text>Renta: ${item.renta}</Text>
-            <Text>Servicios: ${item.gServicio}</Text>
-            <Text>Familiares: ${item.gFamiliar}</Text>
-            <Text>Venta: ${item.gVenta}</Text>
-            <Text>Circulo credito: ${item.gCirculoc}</Text>
-            <Text>Aministrativos: ${item.gAdmin}</Text>
-            <Text>Escolar: ${item.gEscolar}</Text>
-            <Text>Alimentacion: ${item.gAlim}</Text>
-            <Text>Calzado y Vestido: ${item.gCalzVes}</Text>
-            <Text>Vehiculo: ${item.gVeh}</Text>
-            <Text>Transporte: ${item.gTransp}</Text>
-            <Text>Credito Activo: ${item.creditoAct}</Text>
+            <Text><Text style={styles.colorT}>Renta: $ </Text>{item.renta}</Text>
+            <Text><Text style={styles.colorT}>Servicios: $ </Text>{item.gServicio}</Text>
+            <Text><Text style={styles.colorT}>Familiares: $ </Text>{item.gFamiliar}</Text>
+            <Text><Text style={styles.colorT}>Venta: $ </Text>{item.gVenta}</Text>
+            <Text><Text style={styles.colorT}>Circulo credito: $ </Text>{item.gCirculoc}</Text>
+            <Text><Text style={styles.colorT}>Aministrativos: $ </Text>{item.gAdmin}</Text>
+            <Text><Text style={styles.colorT}>Escolar: $ </Text>{item.gEscolar}</Text>
+            <Text><Text style={styles.colorT}>Alimentacion: $ </Text>{item.gAlim}</Text>
+            <Text><Text style={styles.colorT}>Calzado y Vestido: $ </Text>{item.gCalzVes}</Text>
+            <Text><Text style={styles.colorT}>Vehiculo: $ </Text>{item.gVeh}</Text>
+            <Text><Text style={styles.colorT}>Transporte: $ </Text>{item.gTransp}</Text>
+            <Text><Text style={styles.colorT}>Credito Activo: </Text>{item.creditoAct}</Text>
 
 
             <Text style={styles.nombre}>Beneficiario</Text>
-            <Text>Beneficiario: {item.nomBenf}</Text>
-            <Text>Lugar de Nacimiento: {item.lugarNacBenf}</Text>
-            <Text>Fecha de Nacimiento: {item.fechaNacBenf}</Text>
-            <Text>Domicilio: {item.direccionBenf}</Text>
-            <Text>Parentesco: {item.parentesco}</Text>
-            <Text>Ingresos totales: ${item.ingresos}</Text>
-            <Text>Egresos totales: ${item.egresos}</Text>
+            <Text><Text style={styles.colorT}>Beneficiario: </Text>{item.nomBenf}</Text>
+            <Text><Text style={styles.colorT}>Lugar de Nacimiento: </Text> {item.lugarNacBenf}</Text>
+            <Text><Text style={styles.colorT}>Fecha de Nacimiento: </Text> {item.fechaNacBenf?.split("T")[0]}</Text>
+            <Text><Text style={styles.colorT}>Domicilio: </Text>{item.direccionBenf}</Text>
+            <Text><Text style={styles.colorT}>Parentesco: </Text> {item.parentesco}</Text>
+            <Text><Text style={styles.colorT}>Ingresos totales: $ </Text>{item.ingresos}</Text>
+            <Text><Text style={styles.colorT}>Egresos totales: $ </Text>{item.egresos}</Text>
 
             <Text
                 style={styles.boton}
@@ -394,12 +394,16 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   nombre: {
-    backgroundColor: "#0f9f17",
-    borderRadius: 12,
+    backgroundColor: "#2e6b48",
+    borderRadius: 10,
     padding: 8,
     fontWeight: "bold",
-    fontSize: 16,
+    fontSize: 18,
     marginBottom: 5,
+    width: 690,
+    alignSelf: "center",    
+    justifyContent: "center",    
+    textAlign:"center"
   },
   subtitulo: {
     fontWeight: "bold",
@@ -407,6 +411,12 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     color: "#068436",
   },
+  colorT: {
+    fontWeight: "bold",
+    fontSize: 16,
+    marginBottom: 5,
+    color: "#1e2d24",
+  }, 
   botones: {
     flexDirection: "row",
     marginTop: 10,
@@ -423,16 +433,18 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
    textoBoton: {
-    color: "#FFF",
+    color: "#1b1414",
     fontSize: 18,
     fontWeight: "bold",
     textAlign:"center"
   },
   boton: {
-    backgroundColor: "#2563EB",
-    height: 40,
+    backgroundColor: "#1F6F5F",
+    width: 150,
+    height: 35,
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
+    alignSelf: "center",
   },
 });

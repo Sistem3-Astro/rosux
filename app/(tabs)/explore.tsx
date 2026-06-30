@@ -4,15 +4,20 @@ import { Alert, FlatList, Text,  View, StyleSheet} from "react-native";
 import { useAuth } from '@/context/AuthContext';
 import {TouchableOpacity} from "react-native";
 import { router } from "expo-router";
+import { useFocusEffect } from "@react-navigation/native";
+import { useCallback } from "react";
 
 export default function TabTwoScreen() {
    const [clientes, setClientes] = useState<any[]>([]);
   const { usuario } = useAuth(); 
+  const fechaActual = new Date().toLocaleDateString("es-MX");
 
 
-  useEffect(() => {
+  useFocusEffect(
+  useCallback(() => {
     cargarUsuarios();
-  }, []);
+  }, [])
+  );
 
   const cargarUsuarios = async () => {
     try {
@@ -30,9 +35,9 @@ export default function TabTwoScreen() {
         b.fechaNacBenf,
         b.direccionBenf,
         b.parentesco,
-   edad,
-   ingresos,
-   egresos
+        edad,
+        ingresos,
+        egresos
 
       FROM cliente c 
       LEFT JOIN vivienda v 
@@ -62,10 +67,13 @@ export default function TabTwoScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.titulo}>
-        Registro de tus visitas
+        Registro de Visitas
       </Text>
       <Text style={styles.nombre}>
-        Total de {Number(clientes.length)} clientes
+        Fecha: {fechaActual}
+      </Text>
+      <Text style={styles.nombre}>
+        Total de {Number(clientes.length)?? 0} clientes
       </Text>
 
        <FlatList
@@ -88,9 +96,13 @@ export default function TabTwoScreen() {
             <Text>Producto: {item.producto}</Text>
  
      </TouchableOpacity>
-     
-    
-       )} 
+     )}
+     ListEmptyComponent={
+    <Text style={styles.registro}>
+      No hay registros disponibles.
+      Realiza tu nuevo registro
+    </Text>
+  } 
       />
      
   
@@ -118,7 +130,9 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 15,
-    alignItems: "center",
+    alignItems: "flex-end",    
+    alignSelf: "center",
+    color:"#063d80"
     
   },
   input: {
@@ -160,6 +174,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 16,
     marginBottom: 5,
+  },
+  registro: {
+    fontWeight: "bold",
+    fontSize: 12,
+    marginBottom: 5,
+    color: "#435876c7"
   },
   subtitulo: {
     fontWeight: "bold",

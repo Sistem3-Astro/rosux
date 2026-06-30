@@ -38,9 +38,6 @@ export default function credito() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.nombre}> 
-      Bienvenido {usuario?.nombre_completo.split(' ')[0]}
-      </Text>
       <Text style={styles.titulo}>DATOS DE CRÉDITO </Text>
       <Text style={styles.subtitulo}>Ingresa los datos solicitados</Text>
 
