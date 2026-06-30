@@ -161,7 +161,7 @@ export default function formu() {
      <Text style={styles.label}>Estado Civil</Text>
      <View style={styles.pickerContainer}>
       <Picker
-        selectedValue={formulario.estadocivil}
+        selectedValue={formulario.estadoCivil}
         onValueChange={(itemValue: string) => updateField('estadoCivil', itemValue)}
       >
         <Picker.Item label="Seleccione un estado civil" value="" />
