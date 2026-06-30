@@ -6,16 +6,11 @@ import { useAuth } from '@/context/AuthContext';
 import {guardarSolicitud} from '@/database/registrar'
 import {actualizar} from '@/database/actualizar'
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
-import { db } from '@/database/usuarios';
 import { useEffect, useState } from "react";
-import { useLocalSearchParams } from "expo-router";
-const { id } = useLocalSearchParams(); 
-
 
 export default function beneficiario() { 
   const { formulario, updateField, resetFormulario} = useFormulario();    
   const { usuario } = useAuth(); 
-  const { clienteId } = useFormulario();
   const [mostrarCalendario, setMostrarCalendario] = useState(false);
   const onChange = (event: DateTimePickerEvent,
      selectedDate?: Date) => {
@@ -106,7 +101,7 @@ export default function beneficiario() {
 
   } else {
     await guardarSolicitud(formularioActualizado, usuario);
-    Alert.alert("Éxito", "Registro guardado correctamente", [
+    Alert.alert("Éxito", "Registrado correctamente", [
         {
           text: "Aceptar",
           onPress: () => {

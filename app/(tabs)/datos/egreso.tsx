@@ -3,14 +3,10 @@ import { View, Text, TextInput,  TouchableOpacity, StyleSheet, Alert, ScrollView
 import { router } from "expo-router";
 import { useFormulario } from "@/context/FormContext";
 import { useAuth } from '@/context/AuthContext';
-import { useLocalSearchParams } from "expo-router"; 
-
-
 
 export default function egreso() { 
   const { formulario, updateField } = useFormulario();    
   const { usuario } = useAuth();   
-  const { id } = useLocalSearchParams(); 
 
   const Siguiente = () => {
     if (!formulario.gServicio ) {
@@ -100,7 +96,7 @@ export default function egreso() {
         <TextInput
         style={styles.input}
         placeholder="$ MXN"
-        value={String(formulario.gCirculoC ?? '')}
+        value={String(formulario.gCirculoc ?? '')}
         maxLength={10}
         keyboardType="numeric"
         onChangeText={(texto) => {

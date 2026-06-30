@@ -11,7 +11,7 @@ export async function actualizar(formulario: any, idCliente: number) {
 await db.runAsync(
   `UPDATE cliente SET
     nombreC=?,
-    fechaNac=?,
+    fe chaNac=?,
     lugarNac=?,
     genero=?,
     telefono=?,
