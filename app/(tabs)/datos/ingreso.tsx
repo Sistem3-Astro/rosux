@@ -27,9 +27,6 @@ export default function ingreso() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.subtitulo}> 
-      Bienvenido {usuario?.nombre_completo.split(' ')[0]}
-      </Text>
       <Text style={styles.titulo}>DATOS DE INGRESOS </Text>
       <Text style={styles.subtitulo}>Ingresa los datos solicitados</Text>
 
@@ -89,7 +86,7 @@ export default function ingreso() {
         style={styles.boton}
         onPress={Siguiente}
       >
-        <Text style={styles.textoBoton}>Enviar</Text>
+        <Text style={styles.textoBoton}>Siguiente</Text>
       </TouchableOpacity>
     </ScrollView>
   );
@@ -135,7 +132,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF",
   },
   boton: {
-    backgroundColor: "#2563EB",
+    backgroundColor: "#1F6F5F",
     height: 50,
     borderRadius: 10,
     justifyContent: "center",

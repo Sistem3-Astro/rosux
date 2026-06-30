@@ -294,7 +294,7 @@ export default function actividad() {
         style={styles.boton}
         onPress={Siguiente}
       >
-        <Text style={styles.textoBoton}>Enviar</Text>
+        <Text style={styles.textoBoton}>Siguiente</Text>
       </TouchableOpacity>
     </ScrollView>
   );
@@ -340,7 +340,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF",
   },
   boton: {
-    backgroundColor: "#2563EB",
+    backgroundColor: "#1F6F5F",
     height: 50,
     borderRadius: 10,
     justifyContent: "center",

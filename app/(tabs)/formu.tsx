@@ -235,7 +235,7 @@ export default function formu() {
         style={styles.boton}
         onPress={Siguiente}
       >
-        <Text style={styles.textoBoton}>Enviar</Text>
+        <Text style={styles.textoBoton}>Siguiente</Text>
       </TouchableOpacity>
     </ScrollView>
   );

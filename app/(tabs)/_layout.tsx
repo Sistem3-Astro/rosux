@@ -20,7 +20,7 @@ export default function TabLayout() {
   const Session = () => {
     Alert.alert(
     "Salir",
-    "¿Deseas cerrar sesion?",
+    "¿Desea cerrar sesion? Volvera a iniciar sesión",
     [
       {
         text: "No",
@@ -45,31 +45,6 @@ export default function TabLayout() {
 
   return ( 
     <FormProvider>
-       <Modal
-  visible={visible}
-  transparent
-  animationType="fade"
->
-  <View style={styles.nombre1}>
-    <View style={styles.nombre1}>
-      <Text style={styles.nombre1}>Cerrar sesión</Text>
-
-      <Text style={styles.nombre1}>
-        ¿Deseas cerrar tu sesión?
-      </Text>
-
-      <View style={styles.nombre1}>
-        <TouchableOpacity onPress={() => setVisible(false)} >
-          <Text>Cancelar</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={Session}>
-          <Text style={{ color: "red" }}>Cerrar sesión</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
-  </View>
-</Modal>
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
@@ -77,7 +52,7 @@ export default function TabLayout() {
         tabBarButton: HapticTab,
         headerRight: () => (
       <TouchableOpacity
-        style={{ marginRight: 25 }} onPress={() => setVisible(true)}
+        style={{ marginRight: 25 }} onPress={Session}
       >
         <Text>
           <AntDesign name="poweroff" size={30} color="black" />

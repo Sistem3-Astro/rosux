@@ -33,9 +33,6 @@ export default function egreso() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.subtitulo}> 
-      Bienvenido {usuario?.nombre_completo.split(' ')[0]}
-      </Text>
       <Text style={styles.titulo}>DATOS DE EGRESOS </Text>
       <Text style={styles.subtitulo}>Ingresa los datos solicitados</Text>
 
@@ -245,7 +242,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF",
   },
   boton: {
-    backgroundColor: "#2563EB",
+    backgroundColor: "#1F6F5F",
     height: 50,
     borderRadius: 10,
     justifyContent: "center",

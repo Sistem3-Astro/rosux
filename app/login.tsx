@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: "bold",
     textAlign: "center",
-    color: "#1E3A8A",
+    color: "#1F6F5F",
   },
   subtitulo: {
     fontSize: 18,
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF",
   },
   boton: {
-    backgroundColor: "#2563EB",
+    backgroundColor: "#306D29",
     height: 50,
     borderRadius: 10,
     justifyContent: "center",
@@ -136,6 +136,7 @@ const styles = StyleSheet.create({
     color: "#FFF",
     fontSize: 18,
     fontWeight: "bold",
+    
   },
   disabled: {
     opacity: 0.6,
