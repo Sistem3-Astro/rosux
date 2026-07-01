@@ -85,12 +85,58 @@ export default function beneficiario() {
       egresos: totalEgresos,
     };
 
-    
+   
   if (formulario.idCliente) {
-    console.log("id cliente a editar", formulario.idCliente);
-    await actualizar(formularioActualizado, formulario.idCliente);
-    
-  Alert.alert("Éxito", "Registro actualizado correctamente", [
+    Alert.alert(
+      "Confirmar",
+      "¿Deseas actualizar los datos del cliente?",
+      [
+        {
+          text: "No",
+          style: "cancel",
+          onPress: () => {
+          resetFormulario();
+          router.replace("/(tabs)/formu");
+        },
+        },
+        {
+          text: "Sí",
+          style: "default",
+          onPress: async () => {
+            try {
+              await actualizar(
+                formularioActualizado,
+                formulario.idCliente!
+              );
+
+              Alert.alert("Éxito", "Registro actualizado correctamente.", [
+                {
+                  text: "Aceptar",
+                  onPress: () => {
+                    resetFormulario();
+                    router.replace("/(tabs)/explore");
+                  },
+                },
+              ]);
+            } catch (error) {
+              console.error(error);
+              Alert.alert(
+                "Error",
+                "No fue posible actualizar el registro."
+              );
+            }
+          },
+        },
+      ],
+      { cancelable: true }
+    );
+
+    return; // ← importante
+  }
+  // Nuevo registro
+  await guardarSolicitud(formularioActualizado, usuario);
+
+  Alert.alert("Éxito", "Registrado correctamente", [
     {
       text: "Aceptar",
       onPress: () => {
@@ -99,27 +145,11 @@ export default function beneficiario() {
       },
     },
   ]);
-
-  } else {
-    await guardarSolicitud(formularioActualizado, usuario);
-    Alert.alert("Éxito", "Registrado correctamente", [
-        {
-          text: "Aceptar",
-          onPress: () => {
-            resetFormulario(); // opcional
-            router.replace("/(tabs)/formu");
-          },
-        },
-      ]
-    );
-  }
-
-  } catch (error) {
-    console.error("Error al guardar:", error);
-    Alert.alert("Error", "No fue posible guardar el registro"  );
-  }
-
-  };   
+} catch (error) {
+  console.error("Error al guardar:", error);
+  Alert.alert("Error", "No fue posible guardar el registro");
+}
+}   
   
 
   return (
@@ -224,7 +254,7 @@ export default function beneficiario() {
         style={styles.boton}
         onPress={Siguiente}
       >
-        <Text style={styles.textoBoton}>Siguiente</Text>
+        <Text style={styles.textoBoton}>Registrar</Text>
       </TouchableOpacity>
     </ScrollView>
   );
