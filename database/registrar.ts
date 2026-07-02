@@ -1,5 +1,6 @@
 import { useAuth } from "@/context/AuthContext";
 import { db } from '@/database/usuarios';
+//Saul90A.Qst base de datos, ingresar correo base90.89Q
 const convertirFecha = (fecha: any) => {
   if (!fecha) return null;
 

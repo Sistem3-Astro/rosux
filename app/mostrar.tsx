@@ -2,7 +2,7 @@ import { db } from "@/database/usuarios";
 import bcrypt from "bcryptjs";
 import * as Crypto from "expo-crypto";
 import { useEffect, useState } from "react";
-import { Alert, FlatList, Text,  View, StyleSheet} from "react-native";
+import { Alert, FlatList, Text,  View, StyleSheet, TouchableOpacity} from "react-native";
 import { useAuth } from '@/context/AuthContext';
 import { useLocalSearchParams } from "expo-router";
 import { router } from "expo-router";
@@ -104,117 +104,30 @@ const cargarCliente = async (id: number) => {
   setCliente(cliente);
 };
 
-  const limpiarFormulario = () => {
-    setEditandoId(null);
-    setNombre("");
-    setClave("");
-    setPassword("");
-    setSucursal("");
-    setRol("usuario");
-  };
 
-  const guardarUsuario = async () => {
-    try {
-      if (!nombre || !clave || !sucursal) {
-        Alert.alert(
-          "Error",
-          "Completa los campos obligatorios"
-        );
-        return;
-      }
-
-      if (editandoId) {
-        await db.runAsync(
-          `UPDATE usuarios
-           SET nombre_completo = ?,
-               clave = ?,
-               sucursal = ?,
-               rol = ?
-           WHERE id = ?`,
+  const Editar = () => {
+     Alert.alert(
+          "Confirme",
+          "¿Deseas editar los datos del cliente?",
           [
-            nombre,
-            clave,
-            sucursal,
-            rol,
-            editandoId,
-          ]
+            {
+              text: "No",
+              style: "cancel",
+            },
+            {
+              text: "Sí",
+              style: "default",
+              onPress: () => {              
+                  router.push({
+                    pathname: '/formu',                    
+                    params: { id: id.toString()},
+                  })               
+                
+              },
+            },
+          ],
+          { cancelable: true }
         );
-
-        if (password.trim()) {
-          const hash = await bcrypt.hash(
-            password,
-            10
-          );
-
-          await db.runAsync(
-            `UPDATE usuarios
-             SET password_hash = ?
-             WHERE id = ?`,
-            [hash, editandoId]
-          );
-        }
-
-        Alert.alert(
-          "Éxito",
-          "Usuario actualizado"
-        );
-      } else {
-        if (!password) {
-          Alert.alert(
-            "Error",
-            "Ingresa una contraseña"
-          );
-          return;
-        }
-
-        const hash = await Crypto.digestStringAsync(
-          Crypto.CryptoDigestAlgorithm.SHA256,
-          password
-        );
-
-        await db.runAsync(
-          `INSERT INTO usuarios
-          (
-            nombre_completo,
-            clave,
-            password_hash,
-            sucursal,
-            rol,
-            activo
-          )
-          VALUES (?, ?, ?, ?, ?, 1)`,
-          [
-            nombre,
-            clave,
-            hash,
-            sucursal,
-            rol,
-          ]
-        );
-
-        Alert.alert(
-          "Éxito",
-          "Usuario creado"
-        );
-      }
-
-      limpiarFormulario();
-      cargarUsuarios();
-    } catch (error: any) {
-      Alert.alert(
-        "Error",
-        error.message
-      );
-    }
-  };
-
-  const editarUsuario = (usuario: any) => {
-    setEditandoId(usuario.id);
-    setNombre(usuario.nombre_completo);
-    setClave(usuario.clave);
-    setSucursal(usuario.sucursal);
-    setRol(usuario.rol);
-    setPassword("");
   };
 
   return (
@@ -310,11 +223,7 @@ const cargarCliente = async (id: number) => {
 
             <Text
                 style={styles.boton}
-                onPress={() =>
-                  router.push({
-                    pathname: '/formu',                    
-                    params: { id:item.clienteId.toString()},
-                  })
+                onPress={Editar
                 }
               >
                 <Text style={styles.textoBoton}>Editar</Text>
@@ -396,14 +305,12 @@ const styles = StyleSheet.create({
   nombre: {
     backgroundColor: "#2e6b48",
     borderRadius: 10,
-    padding: 8,
+    paddingHorizontal: 15,
+    paddingVertical: 8,
     fontWeight: "bold",
     fontSize: 18,
-    marginBottom: 5,
-    width: 690,
-    alignSelf: "center",    
-    justifyContent: "center",    
-    textAlign:"center"
+    alignSelf: "center",        
+    textAlign:"center",
   },
   subtitulo: {
     fontWeight: "bold",

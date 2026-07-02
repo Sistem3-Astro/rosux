@@ -1,6 +1,6 @@
 import { db } from "@/database/usuarios";
 import { useEffect, useState } from "react";
-import { Alert, FlatList, Text,  View, StyleSheet} from "react-native";
+import { Alert, FlatList, Text,  View, StyleSheet,RefreshControl, ScrollView} from "react-native";
 import { useAuth } from '@/context/AuthContext';
 import {TouchableOpacity} from "react-native";
 import { router } from "expo-router";
@@ -18,6 +18,15 @@ export default function TabTwoScreen() {
     cargarUsuarios();
   }, [])
   );
+   const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      cargarUsuarios();
+      setRefreshing(false);
+    }, 2000);
+  }, []);
 
   const cargarUsuarios = async () => {
     try {
@@ -103,6 +112,9 @@ export default function TabTwoScreen() {
       Realiza tu nuevo registro
     </Text>
   } 
+      refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+}
       />
      
   
